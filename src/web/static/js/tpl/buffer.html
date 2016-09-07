@@ -1,0 +1,277 @@
+{% var i,j=0; %}
+{% if (!o.groups && o.nav) { %}
+<tr class="nodrag playlist">
+    <td colspan="{%if (o.parent=='edit-playlists') {print('1')} else {print('2')}%}">
+        <p class="playlist">
+            <a onclick="browser.displayPlaylists('{%=o.parent%}')">Playlist</a> {%=o.nav.name%}
+        </p>
+    </td>
+    <td>
+        <p class="playlist text-right">
+            <a class=" small" onclick="browser.displayPlaylists('{%=o.parent%}')">back</a>
+        </p>
+    </td>
+</tr>
+{% } %}
+
+{% if (o.groups) { %}
+{% for (var j=0, group; group=o.groups[j]; j++) { %}
+<tr id="{%=group._id%}" class="playlist-groups nodrag">
+    <td style="width: 18px" onclick="browser.displayPlaylist('{%=o.parent%}', $(this).closest('tr'))" class="program-icon playlist">
+        <div></div>
+    </td>
+    <td onclick="browser.displayPlaylist('{%=o.parent%}', $(this).closest('tr'))" class="playlist">
+        <p class="playlist">
+            {%=group.name%}
+        </p>
+    </td>
+    <td class="playlist-no-action">
+        <p class="playlist">
+            {%=group.name%}
+        </p>
+    </td>
+    <td class="mark" style="width: 140px">
+
+        {% var tid = browser.generateUUID(); %}
+        <div class="checkbox checkbox-white pull-right" style="margin:0px">
+            <input type="checkbox" name="mark" id="mark-{%=tid%}">
+            <label for="mark-{%=tid%}"><span><span></span></span>select playlist</label>
+        </div>
+    </td>
+    {% if (o.parent == "edit-playlists") { %}
+    <td style="width: 120px;">
+        <div style="width: 120px;display: table;margin: 0 auto">
+            <div class="center-icon" >
+                <a onclick='browser.edit_playlist(this)' class="p-danger">
+                    <span class=" glyphicon glyphicon-pencil"></span>
+                </a>
+            </div>
+            <div class="center-icon" style="width: 10px">
+                <div class="divider"></div>
+            </div>
+            <div class="center-icon" >
+                <a onclick='browser.remove_playlist(this)' class="p-danger">
+                    <span class=" glyphicon glyphicon-trash"></span>
+                </a>
+            </div>
+            <div class="center-icon" style="width: 10px">
+                <div class="divider"></div>
+            </div>
+            <div class="center-icon" >
+                <a onclick='browser.paste_into(this)'>
+                    Paste into
+                </a>
+            </div>
+        </div>
+    </td>
+    {% } %}
+</tr>
+<tr class="hide playlist-edit swipe-left nodrag">
+    <td colspan='3' style="padding-top: 4px; padding-bottom: 3px">
+        <div style="width: 100%;display: table;margin: 0 auto">
+            <div class="center-icon" style="text-align: left">
+                <p style="margin-bottom:0"><span class="p-danger" style="display: inline-block">Delete playlist!</span> Are you sure?</p>
+            </div>
+            <div class="center-icon" style="width: 130px">
+                <div style="width: 130px;display: table;margin: 0 auto">
+                    <div class="center-icon" >
+                        <a onclick="browser.do_remove_playlist(this)" class="p-danger">YES</a>
+                    </div>
+                    <div class="center-icon" style="width: 10px">
+                        <div class="divider"></div>
+                    </div>
+                    <div class="center-icon" style="width: 95px" >
+                        <a onclick="browser.unswipe(this)">No, go back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+<tr class="hide playlist-edit swipe-right nodrag">
+    <td colspan='3' style="padding-top: 4px; padding-bottom: 3px">
+        <div style="width: 100%;display: table;margin: 0 auto">
+            <div class="center-icon">
+                <input name="playlist_name" type="text" value="{%=group.name%}" class="form-control white nodrag"
+                       placeholder="Playlist name"/>
+            </div>
+            <div class="center-icon" style="width: 130px">
+                <a onclick="browser.do_edit_playlist(this)" class="p-danger">Save</a>
+            </div>
+        </div>
+    </td>
+</tr>
+{% } %}
+{% } %}
+
+{% for (var i=0, track; track=o.results[i]; i++) { %}
+<tr id="{%=track._id%}" class="track">
+    <td class="play">
+        <a data-url="/media/{%=track.file_id%}.ogg" onclick="player.do_play_stop(this);return false" >
+            <span class="glyphicon glyphicon-play"></span>
+        </a>
+    </td>
+    <td class="about">
+        <span data-duration="{%=track.duration%}" class="format-duration"></span>
+        <strong>{%=track.title%}</strong><br>
+        <input type="hidden" value="{%=track._id%}" name="id">
+        <input type="hidden" value="{%=track.weight%}" name="weight">
+        <input type="hidden" value="{%=track.artist%}" name="artist">
+        <input type="hidden" value="{%=track.title%}" name="title">
+        {%=track.artist%}
+    </td>
+    <td class="repeats nodrag">
+        <span data-duration="{%=track.duration%}" class="format-duration"></span>
+        <strong>{%=track.title%}</strong><br>
+        <input type="hidden" value="{%=track._id%}" name="id">
+        <input type="hidden" value="{%=track.weight%}" name="weight">
+        <input type="hidden" value="{%=track.artist%}" name="artist">
+        <input type="hidden" value="{%=track.title%}" name="title">
+        {%=track.artist%}
+    </td>
+    <td class="repeats nodrag" style="width: 140px">
+        <div class="pull-right" style="width: 140px">
+            <select name="" id="" class="form-control repeating">
+                <option value="0" {% if (track.repeating === undefined || track.repeating == 0) {print('selected="selected"');} %}>never</option>
+                <option value="1" {% if (track.repeating == 1) {print('selected="selected"');} %}>at the beginning</option>
+                <option value="2" {% if (track.repeating == 2) {print('selected="selected"');} %}>2 times</option>
+                <option value="3" {% if (track.repeating == 3) {print('selected="selected"');} %}>3 times</option>
+                <option value="4" {% if (track.repeating == 4) {print('selected="selected"');} %}>4 times</option>
+                <option value="5" {% if (track.repeating == 5) {print('selected="selected"');} %}>5 times</option>
+                <option value="6" {% if (track.repeating == 6) {print('selected="selected"');} %}>6 times</option>
+                <option value="7" {% if (track.repeating == 7) {print('selected="selected"');} %}>7 times</option>
+                <option value="8" {% if (track.repeating == 8) {print('selected="selected"');} %}>8 times</option>
+                <option value="9" {% if (track.repeating == 9) {print('selected="selected"');} %}>9 times</option>
+                <option value="10" {% if (track.repeating == 10) {print('selected="selected"');} %}>10 times</option>
+                <option value="11" {% if (track.repeating == 11) {print('selected="selected"');} %}>in the middle</option>
+                <option value="12" {% if (track.repeating == 12) {print('selected="selected"');} %}>at the end</option>
+            </select>
+        </div>
+    </td>
+
+    <td class="database" style="width: 30px">
+        <div style="width: 30px;display: table;margin: 0 auto">
+            <div class="center-icon">
+                <a onclick='browser.tags(this)'>
+                    Tags
+                </a>
+            </div>
+        </div>
+    </td>
+
+    <td class="database" style="width: 21px">
+        <div class="checkbox checkbox-nolabel">
+            {% var tid = browser.generateUUID(); %}
+            <input type="checkbox" id="check-{%=tid%}">
+            <label for="check-{%=tid%}"><span><span></span></span></label>
+        </div>
+    </td>
+
+    <td class="buffer" style="width: 120px">
+        <div style="width: 120px;display: table;margin: 0 auto">
+            <div class="center-icon" >
+                <a onclick='browser.remove_from_{%
+                    if (o.parent == "buffer") { print("buffer") }
+                    else if (o.parent == "edit-playlists") { print("playlists") }
+                    else if (o.parent == "edit-favorites") { print("favorites") }
+                    else { print("THIS SHOULD BE DISABLED") }
+                %}(this)' class="p-danger">
+                    <span class=" glyphicon glyphicon-trash"></span>
+                </a>
+            </div>
+            <div class="center-icon" style="width: 10px">
+                <div class="divider"></div>
+            </div>
+            <div class="center-icon" >
+                <a onclick='browser.paste_above_{%
+                    if (o.parent == "buffer") { print("buffer") }
+                else if (o.parent == "edit-playlists") { print("playlists") }
+                else if (o.parent == "edit-favorites") { print("favorites") }
+                else { print("THIS SHOULD BE DISABLED") }
+                %}(this)'>
+                    Paste
+                </a>
+            </div>
+        </div>
+    </td>
+
+</tr>
+{% } %}
+
+{% if ((i+j) == 0) { %}
+<tr class="nodrag">
+    <td colspan="4">
+        No more results
+        {% if (o.parent == "buffer" || o.parent == "edit-playlists" || o.parent == "edit-favorites") { %}
+        <p class="pull-right small" style="margin-bottom: 0">
+
+            <a onclick='browser.paste_above_{%
+                    if (o.parent == "buffer") { print("buffer") }
+                else if (o.parent == "edit-playlists") { print("playlists") }
+                else if (o.parent == "edit-favorites") { print("favorites") }
+                else { print("THIS SHOULD BE DISABLED") }
+                %}(this)'>
+                Paste
+            </a>
+        </p>
+        {% } %}
+    </td>
+</tr>
+{% } %}
+
+
+{% if (o.results.length) { %}
+
+<tr class="nodrag select">
+    <td colspan="4">
+        <div style="display: table;margin: 0 auto" class="pull-right">
+            <div class="center-icon" style="">
+                <a onclick="browser.select_all(this)">Select all</a>
+            </div>
+
+            <div class="center-icon remove-selected" style="width: 10px">
+                <div class="divider"></div>
+            </div>
+
+            <div class="center-icon remove-selected" style="">
+                <a onclick="browser.delete_selected(this)" class="p-danger">Delete selected</a>
+            </div>
+        </div>
+    </td>
+</tr>
+{% } %}
+
+
+{% if (o.page !== undefined && ((o.first_page == false) || (o.last_page == false))) { %}
+<tr class="nodrag" style="border-bottom: 0">
+    <td colspan="4" class="center" style="padding: 0">
+
+
+        {% if (o.first_page == false && o.last_page == false) { var menu_items = 2; } else { var menu_items = 1; } %}
+
+        <div class="container-fluid lightblue-menu navigation" style="margin: 10px 0 0 0">
+            <div class="icons">
+                <div class="icons-row">
+                    {% if (menu_items === 2) { %}
+                    <div class="icon-wrap" style="width: 49%"><a onclick="browser.prev_page(this, {%=o.page%})" class="active">Previous page</a></div>
+                    <div class="icon-wrap"><div class="divider "></div></div>
+                    <div class="icon-wrap" style="width: 49%"><a onclick="browser.next_page(this, {%=o.page%})" class="active">Next page</a></div>
+                    {% } %}
+                    {% if (menu_items === 1) { %}
+
+                    {% if (o.first_page == false) { %}
+                    <div class="icon-wrap" style="width: 49%"><a onclick="browser.prev_page(this, {%=o.page%})" class="active">Previous page</a></div>
+                    {% } %}
+
+                    {% if (o.last_page == false) { %}
+                    <div class="icon-wrap" style="width: 49%"><a onclick="browser.next_page(this, {%=o.page%})" class="active">Next page</a></div>
+                    {% } %}
+
+                    {% } %}
+                </div>
+            </div>
+        </div>
+
+    </td>
+</tr>
+{% } %}

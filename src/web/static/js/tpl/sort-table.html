@@ -1,0 +1,34 @@
+
+<tr class="sort">
+    {% for (var i=0, s; s=o.avail_order[i]; i++) { %}
+    <td>
+        {% if (s=="artist") { %}
+        <a data-sort="artist" onclick="browser.sort(this, 'artist')" class="link {% if (s==o.order) {print("active")} %}">
+        Artist{% } else if (s=="title") { %}
+        <a data-sort="title" onclick="browser.sort(this, 'title')" class="link {% if (s==o.order) {print("active")} %}">
+        Title{% } else if (s=="album") { %}
+        <a data-sort="album" onclick="browser.sort(this, 'album')" class="link {% if (s==o.order) {print("active")} %}">
+        Album{% } else if (s=="created_at") { %}
+        <a data-sort="created_at" onclick="browser.sort(this, 'created_at')" class="link {% if (s==o.order) {print("active")} %}">
+        Date{% } %}</a>
+
+        {% if (s=="artist") { %}
+        <a onclick="browser.sort(this, 'artist')">
+        {% } else if (s=="title") { %}
+        <a onclick="browser.sort(this, 'title')">
+        {% } else if (s=="album") { %}
+        <a onclick="browser.sort(this, 'album')">
+        {% } else if (s=="created_at") { %}
+        <a onclick="browser.sort(this, 'created_at')">
+        {% } %}
+
+        {% if (s==o.order) if (o.asc==1) { %}
+        <span class="sort-up"></span>
+        {% } else { %}
+        <span class="sort-down"></span>
+        {% } %}
+        </a>
+
+    </td>
+    {% } %}
+</tr>

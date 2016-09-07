@@ -1,0 +1,14 @@
+<select id="stream-genre" name="stream-genre" class="chosen-select hidden form-control" multiple="" data-placeholder=" ">
+
+    {% for key, value in genres.items() %}
+    <optgroup label="{{key}}">
+        <option value="{{key}}">{{key}}</option>
+        {% if len(value.items()) != 0 %}
+        {% for key2, value2 in value.items() %}
+        <option value="{{key2}}" data-search="">{{key2}}</option>
+        {% end %}
+        {% end %}
+    </optgroup>
+    {% end %}
+
+</select>

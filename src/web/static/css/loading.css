@@ -1,0 +1,1 @@
+.loading-bg{width:100%;height:100%;top:0;left:0;position:absolute;background-color:#000;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=80);opacity:0.8;z-index:3}.loading-info{position:absolute;z-index:4}.loading-info-center{z-index:4;position:fixed !important;top:50% !important;left:inherit;overflow:hidden;text-align:center}.loading-info-center img{margin:0 auto}

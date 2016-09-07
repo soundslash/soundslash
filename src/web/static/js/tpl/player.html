@@ -1,0 +1,46 @@
+
+<div class="container-fluid max-width lightblue-bg">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="player play">
+
+                <div class="pic">
+                    <a data-stream="" onclick="player.play_pause(this);return false"
+                       >
+                        <img src="" alt="" class="img-responsive"/>
+
+                        <div class="icon">
+                            <div class="glyphicon glyphicon-play"></div>
+                        </div>
+                        <div class="icon">
+                            <div class="glyphicon glyphicon-stop"></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="details">
+                    <p class="title-wrap">
+                        <span class="artist"></span> - <span class="title"></span>
+                    </p>
+                    <p class="name-wrap">
+                        <span class="stream"></span> - <span class="user"></span>
+                    </p>
+                </div>
+                <div class="controls">
+                    <input type="text" class="slider" value=""
+                           data-slider-min="0"
+                           data-slider-max="100"
+                           data-slider-step="1"
+                           data-slider-value="100"
+                           data-slider-orientation="horizontal"
+                           data-slider-selection="before"
+                           data-slider-tooltip="show">
+                    <p class="share">SHARE</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="player" style="visibility: hidden;position: absolute; top:-1000">
+    <div id="playflash"></div>
+</div>

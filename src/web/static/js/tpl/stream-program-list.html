@@ -1,0 +1,88 @@
+
+
+<div class="container-fluid lightblue-menu">
+    <div class="icons">
+        <div class="icons-row">
+            <div class="icon-wrap" style="width: 49%"><a onclick="program.createProgram('{%=o.day%}')">
+                <img src="/static/img/icons/tab-plus.png" alt="" style="vertical-align: middle;display: inline-block;margin-right: 8px"/><span style="vertical-align: middle;display: inline-block;color:#fff">Create new program</span>
+            </a></div>
+            <div class="icon-wrap"><div class="divider "></div></div>
+            <div class="icon-wrap" style="width: 49%"><a data-href="#timeline" onclick="program.programTimeline(this)">
+                <img src="/static/img/icons/tab-eye.png" alt="" style="vertical-align: middle;display: inline-block;margin-right: 8px"/><span style="vertical-align: middle;display: inline-block;color:#fff">View as timeline</span>
+            </a></div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="tab-content">
+    <div class="tab-pane list active">
+
+
+
+
+        {% for (var i=0, program; program=o.program[i]; i++) { %}
+
+        {% var from = "", to = ""; %}
+        {% if((new Date(program.start)).getHours()<=9)from+='0';from+=(new Date(program.start)).getHours()+':'; if((new Date(program.start)).getMinutes()<=9)from+='0'; from+=(new Date(program.start)).getMinutes(); %}
+        {% if((new Date(program.end)).getHours()<=9)to+='0';to+=(new Date(program.end)).getHours()+':'; if((new Date(program.end)).getMinutes()<=9)to+='0'; to+=(new Date(program.end)).getMinutes(); %}
+        <div class="program-item" data-program-id="{%=program._id%}" onclick="program.editProgram(this)">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="program-item-holder">
+                            <div class="pic" style="background-color: {%=program.color%}">
+                                {% if (program.picture != undefined) { %}<img src="/image.jpg?id={%=program.picture%}&thumb=160x90" alt=""/>{% } %}
+                            </div>
+                            <div class="divider"></div>
+                            <div class="desc">
+                                <p class="blue big">
+                                    {%=from%} - {%=to%}
+                                </p>
+                                <p>{%=program.name%}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% } %}
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <hr>
+                    <p class="blue center">Default program</p>
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="program-item">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="program-item-holder">
+                            <div class="pic" style="background-color: #efefef"></div>
+                            <div class="divider"></div>
+                            <div class="desc">
+                                <p>Default program</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="tab-pane timeline"></div>
+</div>
+
+
+

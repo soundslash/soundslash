@@ -1,0 +1,60 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          soundslash-pipeline
+# Required-Start:    $local_fs $remote_fs $network $syslog
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts Soundslash Pipeline server
+# Description:       starts Soundslash...
+### END INIT INFO
+
+PATH="/www/soundslash/src/Pipeline/src"
+SERVERS=1
+
+case "$1" in
+	start)
+		echo "Not implemented. Use restart!"
+		;;
+	restart)
+		echo "Stopping Soundslash Pipeline servers: "
+		CMD="/usr/bin/screen -ls 'sspipeline' | /usr/bin/awk '{print \"/usr/bin/screen -S \"\$1\" -X quit;\"}' | /bin/grep 'sspipeline'"
+		/bin/su www -c "$CMD" | /bin/su www
+
+		echo "Starting Soundslash Pipeline servers: "
+		while [  $SERVERS -gt 0 ]; do
+			eval "/bin/su www -c '/usr/bin/screen -S sspipeline -d -m -L /usr/bin/python2.7 $PATH/pipeline.py'"
+             		let "SERVERS=SERVERS-1"
+         	done
+
+		;;
+
+	stop)
+		echo -n "Stopping Soundslash Pipeline servers: "
+		CMD="/usr/bin/screen -ls 'sspipeline' | /usr/bin/awk '{print \"/usr/bin/screen -S \"\$1\" -X quit;\"}' | /bin/grep 'sspipeline'"
+		/bin/su www -c "$CMD" | /bin/su www
+		;;
+
+	restart|force-reload)
+		echo "Not implemented."
+		;;
+
+	reload)
+		echo "Not implemented."
+		;;
+
+	configtest|testconfig)
+		echo "Not implemented."
+		;;
+
+	status)
+		echo "Not implemented."
+		;;
+	*)
+		echo "Usage: $NAME {start|stop|restart|reload|force-reload|status|configtest}" >&2
+		exit 1
+		;;
+esac
+
+exit 0

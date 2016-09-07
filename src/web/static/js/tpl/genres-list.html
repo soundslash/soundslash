@@ -1,0 +1,18 @@
+
+{% for (var i in o.genres) { %}
+<div class="row genres-list">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <h1>{%=i%}</h1>
+    </div>
+
+    {% for (var j in o.genres[i]) { %}
+    <div class="col-sm-12 col-md-12 col-lg-12 item">
+        <a onclick='url("/listen.html", {action: "genreList", genre: "{%=j%}"})' class="fullwidth-link">
+            {%=j%} ({%=o.genres[i][j]['count']%})
+        </a>
+    </div>
+    {% } %}
+
+
+</div>
+{% } %}

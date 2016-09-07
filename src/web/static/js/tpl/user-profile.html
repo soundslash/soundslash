@@ -1,0 +1,62 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                You are logged in as
+                {% if (o.user.name.length == 0) { print(o.user.email) } else { print(o.user.name) } %}, <a onclick="url('/user.html', {action: 'logout'})">log out</a>.
+            </p>
+
+            <h1 class="text-center text-uppercase">
+                Basic settings
+            </h1>
+
+            <div class="form-group">
+                <label for="email">Your email</label>
+                <input type="text" class="form-control" name="email" id="email" value="{%=o.user.email%}">
+            </div>
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name" id="name" value="{%=o.user.name%}">
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country</label>
+                <select id="country" name="s_country" class="chosen-select-one form-control" tabindex="1"
+                        placeholder="Country, e.g. Slovakia">
+                    <option value="Unknown" {% if (o.user.country == "Unknown") {  %} selected="selected" {% } %}>
+                        Select country (not required)
+                    </option>
+
+                    {% for (var i in o.countries) { %}
+                    <option value="{%=o.countries[i]%}" {% if (o.user.country == o.countries[i]) { %} selected="selected" {% } %}>
+                        {%=o.countries[i]%}
+                    </option>
+                    {% } %}
+                </select>
+            </div>
+
+
+            <h1 class="text-center text-uppercase">
+                Change password
+            </h1>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="text" class="form-control" name="password" id="password">
+            </div>
+
+            <div class="form-group">
+                <label for="password2">Password again</label>
+                <input type="text" class="form-control" name="password2" id="password2">
+            </div>
+
+            <p class="center">
+                <input class="btn btn-primary" value="Save" type="submit">
+            </p>
+
+
+        </div>
+    </div>
+</div>

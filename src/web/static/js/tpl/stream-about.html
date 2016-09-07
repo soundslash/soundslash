@@ -1,0 +1,93 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="" id="stream-form">
+                <div class="form-group">
+                    <label for="name">Stream name</label>
+                    <input type="text" class="form-control" name="stream-name" id="name" value="{%=o.stream.name%}">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Stream description</label>
+                    <textarea class="form-control" name="stream-description" id="description">{%=o.stream.description%}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="stream-genre">Stream genre</label>
+                    <div class="stream-genre"></div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="picture">Stream image</label>
+                    <div id="picture-wrap" style="display: inline-block"></div>
+                    <div id="picture-show"></div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="background-picture">Background image</label>
+                    <div id="background-picture-wrap" style="display: inline-block"></div>
+                    <div id="background-picture-show"></div>
+                </div>
+
+                <h1 class="text-center text-uppercase">
+                    Advanced settings
+                </h1>
+
+                <div class="form-group">
+
+                    <div class="radio">
+                        <input type="radio" name="stream-public" id="stream-public" value="1"  {% if (o.stream.public == 1) { %}checked{% } %}>
+                        <label for="stream-public"><span><span></span></span>Public stream</label>
+                    </div>
+
+                    <p class="p-danger">Respect copyright law!</p>
+
+                    <div class="radio">
+                        <input type="radio" name="stream-public" id="stream-private" value="0" {% if (o.stream.public == 0) { %}checked{% } %}>
+                        <label for="stream-private"><span><span></span></span>Private stream</label>
+                    </div>
+
+                </div>
+
+                <div class="form-group" {% if (o.stream.public == 1) { %}style="display: none"{% } %}>
+                    <input type="text" name="stream-password" id="stream-password" class="form-control"
+                           placeholder="Password" value="{%=o.stream['users'][0]['password']%}">
+                </div>
+
+                <h1 class="text-center text-uppercase">
+                    Stream status
+                </h1>
+
+
+                <div class="icons">
+                    <div class="icons-row">
+                        <div class="icon-wrap" style="width: 20%;"></div>
+                        <div class="icon-wrap" style="width: 30%;">
+                            <div class="radio center-radio">
+                                <input type="radio" name="stream-active" id="active"  value="1" {% if (o.stream.active == true) { %}checked{% } %}>
+                                <label for="active"><span><span></span></span>Active</label>
+                            </div>
+                        </div>
+                        <div class="icon-wrap" style="width: 30%;">
+                            <div class="radio center-radio">
+                                <input type="radio" name="stream-active" id="deactive" value="0"  {% if (o.stream.active == false) { %}checked{% } %}>
+                                <label for="deactive"><span><span></span></span>Deactive</label>
+                            </div>
+                        </div>
+                        <div class="icon-wrap" style="width: 20%;"></div>
+                    </div>
+                </div>
+
+                <div class="form-group center">
+                    <input type="submit" class="btn btn-primary" value="Save">
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+
+</div>

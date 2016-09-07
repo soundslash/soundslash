@@ -1,0 +1,124 @@
+
+
+<div class="tab-pane active" id="edit-playlists">
+
+<div class="table-responsive">
+    <table class="table create-table">
+        <tr>
+            <td class="text-uppercase">
+                <a onclick="report.create_tag()">
+                    <img src="/static/img/icons/tab-plus.png" alt="" style="vertical-align: middle;margin-right: 10px"/><p style="vertical-align: middle;display: inline-block;margin-bottom: 0">Create new tag</p>
+                </a>
+            </td>
+        </tr>
+
+        <tr class="hide create-playlist">
+            <td colspan='3' style="padding-top: 4px; padding-bottom: 3px">
+                <div style="width: 100%;display: table;margin: 0 auto">
+                    <div class="center-icon">
+                        <input name="playlist_name" type="text" value="" class="form-control white nodrag"
+                               placeholder="Tag name"/>
+                    </div>
+                    <div class="center-icon" style="width: 130px">
+                        <a onclick="report.do_create_tag(this)" class="p-danger">Create</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="edit-playlists swiping" data-snap-ignore="true">
+    <form id="edit-playlists-form">
+        <div class="table-responsive">
+            <table class="table draggable"
+                   id="edit-playlists-table">
+                <tbody class="edit-playlists-body sortable-edit-playlists">
+
+
+
+{% var tags = ["Title", "Artist"]; %}
+{% for (var j=0, tag; tag=tags[j]; j++) { %}
+<tr class="playlist-groups nodrag">
+    <td colspan="2">
+        <p style="margin-bottom: 0">
+            {%=tag%}
+        </p>
+    </td>
+</tr>
+{% } %}
+
+
+
+{% for (var j=0, tag; tag=o.stream.tags[j]; j++) { %}
+<tr class="playlist-groups nodrag">
+    <td>
+        <p style="margin-bottom: 0">
+            {%=tag%}
+        </p>
+    </td>
+    <td style="width: 60px;">
+        <div style="width: 60px;display: table;margin: 0 auto">
+            <div class="center-icon" >
+                <a onclick='report.edit_tag(this)' class="p-danger">
+                    <span class=" glyphicon glyphicon-pencil"></span>
+                </a>
+            </div>
+            <div class="center-icon" style="width: 10px">
+                <div class="divider"></div>
+            </div>
+            <div class="center-icon" >
+                <a onclick='report.remove_tag(this)' class="p-danger">
+                    <span class=" glyphicon glyphicon-trash"></span>
+                </a>
+            </div>
+        </div>
+    </td>
+</tr>
+<tr class="hide playlist-edit swipe-left nodrag">
+    <td colspan='3' style="padding-top: 4px; padding-bottom: 3px">
+        <div style="width: 100%;display: table;margin: 0 auto">
+            <div class="center-icon" style="text-align: left">
+                <p style="margin-bottom:0"><span class="p-danger" style="display: inline-block">Delete tag!</span> Are you sure?</p>
+            </div>
+            <div class="center-icon" style="width: 130px">
+                <div style="width: 130px;display: table;margin: 0 auto">
+                    <div class="center-icon" >
+                        <a onclick="report.do_remove_tag(this)" class="p-danger" data-name="{%=tag%}">YES</a>
+                    </div>
+                    <div class="center-icon" style="width: 10px">
+                        <div class="divider"></div>
+                    </div>
+                    <div class="center-icon" style="width: 95px" >
+                        <a onclick="browser.unswipe(this)">No, go back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+<tr class="hide playlist-edit swipe-right nodrag">
+    <td colspan='3' style="padding-top: 4px; padding-bottom: 3px">
+        <div style="width: 100%;display: table;margin: 0 auto">
+            <div class="center-icon">
+                <input name="playlist_name" type="text" value="{%=tag%}" class="form-control white nodrag"
+                       placeholder="Playlist name"/>
+            </div>
+            <div class="center-icon" style="width: 130px">
+                <a onclick="report.do_edit_tag(this)" class="p-danger" data-name="{%=tag%}">Save</a>
+            </div>
+        </div>
+    </td>
+</tr>
+{% } %}
+<tr style="border-bottom: 0;height: 0"><td colspan="5"></td></tr>
+
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+
+</div>
+

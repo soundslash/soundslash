@@ -1,0 +1,40 @@
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="search-holder">
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                    <input type="text" class="form-control" placeholder="Search" id="search-listen">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid lightblue-menu">
+    <div class="icons">
+        <div class="icons-row"  role="tablist">
+            <div class="icon-wrap" style="width: 33%"><a href="#popular" class="active" role="tab" data-toggle="tab" onclick="url('/listen.html', {action: 'popular'})">Popular</a></div>
+            <div class="icon-wrap"><div class="divider "></div></div>
+            <div class="icon-wrap" style="width: 33%"><a href="#genre" role="tab" data-toggle="tab" onclick="url('/listen.html', {action: 'genres'})">Genre</a></div>
+            <div class="icon-wrap"><div class="divider "></div></div>
+            <div class="icon-wrap" style="width: 33%"><a href="#new" role="tab" data-toggle="tab" onclick="url('/listen.html', {action: 'new'})">New</a></div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tab-content">
+                <div class="tab-pane active" id="popular"></div>
+                <div class="tab-pane" id="genre"></div>
+                <div class="tab-pane" id="new"></div>
+            </div>
+        </div>
+    </div>
+</div>

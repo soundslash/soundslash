@@ -1,0 +1,53 @@
+<div class="program">
+    <div class="hour-holder">
+        <div style="display: table-cell;position: relative;width: 45px">
+        </div>
+        <div style="display: table-cell;position: relative">
+            <div class="center small" style="margin-bottom: 10px">60 minutes</div>
+        </div>
+    </div>
+{% for (var i=0, hour; hour=o.hours[i]; i++) { %}
+    {% var layer_length = 0, cell_height = 30; %}
+    <div class="hour-holder">
+        <div style="display: table-cell;position: relative;width: 45px">
+            <div style="position:relative;height: {%=(cell_height+1+(o.layers_per_hour[i]*layer_length))%}px;width: 100%;display: block">
+                <div style="position: absolute;top:-8px;right: 8px" class="small">{%if(i<=9)print('0');%}{%=i%}:00</div>
+            </div>
+        </div>
+        <div style="display: table-cell;position: relative">
+            <div class="hour hour-{%=i%}"
+                 style="position:relative;height: {%=(cell_height+1+(o.layers_per_hour[i]*layer_length))%}px;width: 100%;display: block">
+            <!--hour {%=i%}-->
+            {% if (hour.length == 0) { %}
+                <div style="position: absolute;left:0;width: 100%;height: {%=cell_height%}px"
+                     data-z-index="0"
+                     data-opacity="1">{%if(i<=9)print('0');%}{%=i%}:00 Default program</div>
+            {% } else for (var j=0, program; program=hour[j]; j++) { %}
+                <div class="program-{%=program.program._id%}" data-program-id="{%=program.program._id%}" onclick="program.editProgram(this)" style="background-color: {%=program.program.color%};
+                    position: absolute;
+                    display: block;
+                    {% if (program.program._id !== undefined) print('cursor: pointer;'); %}
+                    left:{%=program.start_percent%}%;
+                    top: {%=(program.layer*layer_length)%}px;
+                    width: {%=program.duration_percent%}%;
+                    z-index: {%=hour.length-j%};
+                    {% if (o.layers_per_hour[i] !== 0) print('opacity:1;'); %}
+                    height: {%=cell_height%}px"
+                     data-z-index="{%=hour.length-j%}"
+                     data-opacity="{% if (o.layers_per_hour[i] !== 0) print(1); else print(1); %}">
+
+                    {% if (i == (new Date(program.program.start)).getHours()) { %}
+                    <span class="small" style="margin-left: 5px">{%if(i<=9)print('0');%}{%=i%}:{%if(program.start<=9)print('0');%}{%=program.start%} </span>{%=program.program.name%}
+                    {% } %}
+                    {% if (i == (new Date(program.program.end)).getHours()) { %}
+                    <span class="small pull-right" style="margin-right: 5px">{%if(i<=9)print('0');%}{%=i%}:{%if((new Date(program.program.end)).getMinutes()<=9)print('0');%}{%=(new Date(program.program.end)).getMinutes()%}</span>
+                    {% } else if (i == (new Date(program.program.end)).getHours()-1 && (new Date(program.program.end)).getMinutes() === 0) { %}
+                    <span class="small pull-right" style="margin-right: 5px">{%if(i<=9)print('0');%}{%=i%}:59</span>
+                    {% } %}
+                </div>
+            {% } %}
+            </div>
+        </div>
+    </div>
+{% } %}
+</div>

@@ -1,0 +1,39 @@
+{% for (var i=0, user; user=o.users[i]; i++) { %}
+<tr class="linked">
+    <td>
+        <a href="/admin/user/{%=user._id%}/log-as.html">{%=user.name%}</a>
+    <td>
+    {%=user.email%}
+    {% if (user.confirmed) { %}
+    <i class="glyphicon glyphicon-ok-circle" style="color: green; font-size: 12pt;"></i>
+    {% } else { %}
+    <i class="glyphicon glyphicon-remove-circle" style="color: red; font-size: 12pt;"></i>
+    {% } %}</td>
+    <td>{%=user.free_mb%}</td>
+
+</tr>
+{% } %}
+
+{% if (i == 0) { %}
+<tr>
+    <td colspan="3">
+        No more results
+    </td>
+</tr>
+{% } %}
+
+{% if (o.page !== undefined && ((o.first_page == false) || (o.last_page == false))) { %}
+<tr class="nodrag">
+    <td colspan="3">
+        {% if (o.first_page == false) { %}
+        <a href="#" onclick="prev_page(this, {%=o.page%})">Previous page</a>
+        {% } %}
+        {% if (o.first_page == false && o.last_page == false) { %}
+        |
+        {% } %}
+        {% if (o.last_page == false) { %}
+        <a href="#" onclick="next_page(this, {%=o.page%})">Next page</a>
+        {% } %}
+    </td>
+</tr>
+{% } %}

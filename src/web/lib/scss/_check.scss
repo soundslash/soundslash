@@ -1,0 +1,90 @@
+$check_height: 21px;
+$check_padding_left: 30px;
+
+$radio_height: 25px;
+$radio_padding_left: 30px;
+
+input[type=checkbox]:not(old) {
+
+  width   : $check_height;
+  display: none;
+  margin  : 0;
+  padding : 0;
+  opacity : 0;
+
+}
+
+input[type=radio   ]:not(old){
+  width   : $radio_height;
+  display: none;
+  margin  : 0;
+  padding : 0;
+  opacity : 0;
+}
+
+input[type=checkbox]:not(old) + label {
+  display      : inline-block;
+  //margin-left  : -17px;
+  width: 100%;
+  padding-left : $check_padding_left;
+  background   : url(/static/img/icons/check-off.png) no-repeat 0 0;
+  line-height  : $check_height;
+}
+
+.checkbox-white input[type=checkbox]:not(old) + label {
+
+  background   : url(/static/img/icons/check-white-off.png) no-repeat 0 0;
+}
+
+input[type=radio   ]:not(old) + label {
+  display      : inline-block;
+  //margin-left  : -17px;
+  width: 100%;
+  padding-left : $radio_padding_left;
+  background   : url(/static/img/icons/radio-off.png) no-repeat 0 0;
+  line-height  : $radio_height;
+}
+
+.checkbox.checkbox-nolabel {
+  margin: 0;
+  min-height: $check_height;
+  min-width: $check_height;
+  width: $check_height;
+  height: $check_height;
+
+}
+.checkbox.checkbox-nolabel label {
+  width: $check_height;
+  height: $check_height;
+  padding: 0;
+  margin: 0;
+}
+
+.center-radio input[type=radio   ]:not(old) + label {
+  display      : inline-block;
+  width: 100%;
+  text-align: center;
+  padding-top: $radio_height;
+  background   : url(/static/img/icons/radio-off.png) no-repeat 50% 0;
+  line-height  : $radio_height;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+input[type=checkbox]:checked:not(old) + label{
+  background-image: url(/static/img/icons/check-on.png);
+}
+
+
+.checkbox-white input[type=checkbox]:checked:not(old) + label{
+  background-image: url(/static/img/icons/check-white-on.png);
+}
+
+input[type=radio]:checked:not(old) + label{
+  background-image: url(/static/img/icons/radio-on.png);
+}
+
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+  margin-left: 0;
+  position: relative;
+}

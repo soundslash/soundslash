@@ -1,0 +1,344 @@
+@import "compass/layout/stretching";
+@import "compass/css3";
+@import "compass/utilities";
+@import "compass/css3/transform";
+@import "compass/utilities/general/min";
+
+.max-width {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1400px; /* or 950px */
+}
+
+
+.bg-gradient-blue {
+  //background-image: url("/static/img/bg-gradient-blue.gif");
+  background-color: #1a4c6d;
+}
+
+
+.navbar {
+  margin-bottom: 0px;
+}
+
+nav .user-picture {
+  @include border-radius(2px);
+  border:5px solid #fff;
+  margin-right: 20px;
+  margin-top:-18px;
+}
+
+.navbar-nav > li.dropdown > a {
+  padding-top: 25px;
+  padding-bottom: 19px;
+}
+
+.navbar-nav > li > a {
+  padding-top:35px;
+  padding-bottom:28px;
+}
+
+.navbar-default {
+  background-color: transparent;
+  border: 0;
+}
+
+nav .badge {
+  background-color: #c11910;
+  font-size: 10px;
+  font-weight: normal;
+  position: absolute;
+  top: 20px;
+  right: 5px;
+  padding: 3px;
+  @include border-radius(5px);
+}
+
+.left-menu .badge {
+  background-color: #bababa;
+  font-size: 10px;
+  font-weight: normal;
+  padding: 3px;
+  @include border-radius(5px);
+
+
+}
+
+.left-menu {
+  background-color: #f5f5f5;
+}
+.left-menu li a {
+  padding: 17px 15px;
+}
+.left-menu {
+  color: #1b4d70 !important;
+}
+
+.left-menu .icon {
+  background-color: #1b4d70;
+  color: #fff;
+  padding:7px;
+  font-size: 15px;
+  @include border-radius(15px);
+  margin-right: 10px;
+}
+
+
+
+.left-menu .stream-name {
+  border-left: 3px solid #c11910;
+  padding: 25px 10px;
+  font-size: 16px;
+}
+
+.navbar-default .navbar-toggle {
+  border:0;
+}
+.navbar-default .navbar-toggle:hover {
+  //Pozadie toggle buttona pri mobile
+  background-color: transparent;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #fff;
+}
+
+.caption {
+
+  position: absolute;
+  bottom: 5px;
+  left: 20px;
+  right: 20px;
+
+  background: rgba(0,0,0,0.5);
+  text-align: center;
+  color: #fff;
+  padding: 10px;
+}
+
+.thumbnail .caption {
+  color: #fff;
+}
+
+.caption.caption-green {
+  background: rgba(0,255,0,1);
+}
+
+.thumbnail-image {
+  margin-bottom: 30px;
+}
+
+
+.chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+  padding:3px 5px;
+  height:25px;
+}
+
+#picture, #picture-show {
+  margin-bottom:15px;
+}
+
+#picture-show img {
+
+  @include border-radius(5px);
+  //border: 5px solid #ccc;
+}
+
+.chosen-container-single .chosen-single {
+  padding: 4px 15px;
+  height: auto;
+  border-color: #ddd;
+}
+.chosen-container-single .chosen-single span  {
+  margin-right: 0;
+}
+.chosen-container-single .chosen-single div b {
+  background: url("/static/img/chosen-sprite.png") no-repeat scroll 0 7px transparent;
+}
+.chosen-container-active.chosen-with-drop .chosen-single div b {
+  background-position: -18px 7px;
+}
+
+
+.chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+  font-family: inherit;
+  color: inherit;
+  padding: 8px 12px;
+  height: 38px;
+}
+.chosen-container-multi .chosen-choices li.search-choice {
+  margin: 6px 0px 0px 12px;
+}
+.chosen-container-multi .chosen-choices li.search-choice {
+  line-height: 20px;
+}
+.chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+  top:6px;
+}
+.chosen-container-multi .chosen-choices {
+  @include border-radius(3px);
+}
+
+
+//loading
+
+.loading-bg {
+  width: 100%;
+  height: 100%;
+  top:0;
+  left: 0;
+  position: absolute;
+  background-color: #fff;
+  @include opacity(0.80);
+  z-index: 1;
+}
+
+.loading-info {
+  position: absolute;
+  z-index: 2;
+}
+
+
+
+.appolo {
+  //border: 12px solid rgba(0, 0, 0, 0.45);
+  //border-radius: 5px 5px 5px 5px;
+  //box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  //margin: 0 auto;
+  max-width: 362px;
+  position: relative;
+}
+
+
+.invisible-input {
+  width: 100%;
+  height: 100%;
+  border:0;
+  background: inherit;
+  background-color: inherit;
+}
+
+.draghandle {
+  width:25px;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.gold {
+  color: #FFD700;
+}
+
+tr.linked.hover {
+  cursor: pointer;
+}
+
+
+.chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+  font-family: inherit;
+  color: inherit;
+  padding: 8px 12px;
+  height: 32px;
+}
+.chosen-container-multi .chosen-choices li.search-choice {
+  margin: 3px 0px 0px 12px;
+}
+.chosen-container-multi .chosen-choices li.search-choice {
+  line-height: 20px;
+}
+.chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+  top:6px;
+}
+.chosen-container-multi .chosen-choices {
+  @include border-radius(3px);
+}
+
+
+#group tbody tr:hover, #buffer tbody tr:hover , #previous tbody tr:hover {
+  cursor: move;
+}
+#group tbody tr.nodrag:hover, #buffer tbody tr.nodrag:hover {
+  cursor: default;
+}
+
+
+.live-holder .table-bordered > thead > tr > th,
+.live-holder .table-bordered > tbody > tr > th,
+.live-holder .table-bordered > tfoot > tr > th,
+.live-holder .table-bordered > thead > tr > td,
+.live-holder .table-bordered > tbody > tr > td,
+.live-holder .table-bordered > tfoot > tr > td {
+  border:0;
+  border-bottom: 1px solid #ddd;
+}
+
+.position-holder {
+  @include border-radius(3px);
+  padding: 10px;
+  margin-bottom: 15px;
+  color:#fff;
+  background-color: #333;
+  overflow: hidden;
+}
+
+
+label .info {
+  font-weight: normal;
+  font-style: italic;
+  color: #aaa;
+  font-size:11px;
+}
+
+.submenu {
+  float:left;
+  width: 250px;
+  height: 100%;
+}
+
+.content-wrapper {
+  background-color: #f5f5f5;
+  padding: 0;
+  //margin: 0 15px;
+}
+
+.content {
+  margin-left: 250px;
+//  background-color: #fff;
+
+}
+
+.content h1 {
+  margin-top: 0;
+  padding-top: 15px;
+}
+
+html, body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+html{min-height:100%;position:relative}/* make sure it is at least as tall as the viewport */
+body{min-height:100%}
+
+.left-menu:before {
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background-color: #f5f5f5;
+  bottom: 0;
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  width: 250px;
+  z-index: -1;
+}
+
+
+.without-content.row:before, .without-content.row:after {
+  content: normal;
+}
+
+

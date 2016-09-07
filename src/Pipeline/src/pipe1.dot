@@ -1,0 +1,88 @@
+digraph pipeline {
+  rankdir=LR;
+  fontname="sans";
+  fontsize="10";
+  labelloc=t;
+  nodesep=.1;
+  ranksep=.2;
+  label="<GstPipeline>\npipeline0\n[>]";
+  node [style=filled, shape=box, fontsize="9", fontname="sans", margin="0.0,0.0"];
+  edge [labelfontsize="6", fontsize="9", fontname="monospace"];
+
+  subgraph cluster_bin1_0x3402170 {
+    fontname="Bitstream Vera Sans";
+    fontsize="8";
+    style=filled;
+    color=black;
+
+    label="GstBin\nbin1\n[>]";
+    _proxypad2_0x356e3e0 [color=black, fillcolor="#ddddff", label="proxypad2\n[>][bfgsb]", height="0.2", style="filled,solid"];
+  bin1_0x3402170_sink_0x356d3e0 -> _proxypad2_0x356e3e0 [style=dashed, minlen=0]
+    bin1_0x3402170_sink_0x356d3e0 [color=black, fillcolor="#ddddff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+    fillcolor="#ffffff";
+    subgraph cluster_shout2send0_0x3581c00 {
+      fontname="Bitstream Vera Sans";
+      fontsize="8";
+      style=filled;
+      color=black;
+
+      label="GstShout2send\nshout2send0\n[>]\nlast-buffer=???\nip=\"192.168.0.2\"\nmount=\"/example.ogg\"";
+      shout2send0_0x3581c00_sink_0x3566c70 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      fillcolor="#aaaaff";
+    }
+
+    subgraph cluster_queue2_0x3564560 {
+      fontname="Bitstream Vera Sans";
+      fontsize="8";
+      style=filled;
+      color=black;
+
+      label="GstQueue\nqueue2\n[>]";
+      queue2_0x3564560_sink_0x3566df0 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      queue2_0x3564560_src_0x35830b0 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      fillcolor="#aaffaa";
+    }
+
+    queue2_0x3564560_src_0x35830b0 -> shout2send0_0x3581c00_sink_0x3566c70 [labeldistance="10", labelangle="0", label="                                                  ", headlabel="ANY", taillabel="application/ogg\laudio/mpeg\l         mpegversion: 1\l               layer: [ 1, 3 ]\l"]
+    _proxypad2_0x356e3e0 -> queue2_0x3564560_sink_0x3566df0 [label="ANY"]
+  }
+
+  subgraph cluster_tee1_0x33ff140 {
+    fontname="Bitstream Vera Sans";
+    fontsize="8";
+    style=filled;
+    color=black;
+
+    label="GstTee\ntee1\n[>]\nnum-src-pads=1";
+    tee1_0x33ff140_sink_0x3566af0 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+    tee1_0x33ff140_src0_0x3583230 [color=black, fillcolor="#ffaaaa", label="src0\n[>][bfgsb]", height="0.2", style="filled,dashed"];
+    fillcolor="#aaffaa";
+  }
+
+  tee1_0x33ff140_src0_0x3583230 -> bin1_0x3402170_sink_0x356d3e0 [label="ANY"]
+  subgraph cluster_queue1_0x35642d0 {
+    fontname="Bitstream Vera Sans";
+    fontsize="8";
+    style=filled;
+    color=black;
+
+    label="GstQueue\nqueue1\n[>]";
+    queue1_0x35642d0_sink_0x35667f0 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+    queue1_0x35642d0_src_0x3566970 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+    fillcolor="#aaffaa";
+  }
+
+  queue1_0x35642d0_src_0x3566970 -> tee1_0x33ff140_sink_0x3566af0 [label="ANY"]
+  subgraph cluster_udpsrc0_0x357e060 {
+    fontname="Bitstream Vera Sans";
+    fontsize="8";
+    style=filled;
+    color=black;
+
+    label="GstUDPSrc\nudpsrc0\n[>]\ndo-timestamp=TRUE\nport=5000\nuri=\"udp://0.0.0.0:5000\"\nsock=28";
+    udpsrc0_0x357e060_src_0x3566670 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+    fillcolor="#ffaaaa";
+  }
+
+  udpsrc0_0x357e060_src_0x3566670 -> queue1_0x35642d0_sink_0x35667f0 [label="ANY"]
+}

@@ -1,0 +1,9 @@
+/src/Pipeline/.idea
+/src/Pipeline/Pipeline.iml
+/src/web/.idea
+/src/web/web.iml
+/src/web/lib/scss/.sass-cache
+*.pyc
+*.mp3
+*.ogg
+*.wav

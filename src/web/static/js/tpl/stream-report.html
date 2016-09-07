@@ -1,0 +1,80 @@
+
+
+<div class="container-fluid lightblue-menu lightblue-bg reports-menu">
+    <div class="icons">
+        <div class="icons-row"  role="tablist">
+            <div class="icon-wrap" style="width: 33%"><a href="#export" class="active" role="tab" data-toggle="tab" onclick="report.export(this)">Export</a></div>
+            <div class="icon-wrap"><div class="divider "></div></div>
+            <div class="icon-wrap" style="width: 33%"><a href="#tags" role="tab" data-toggle="tab" onclick="report.tags(this)">Tags</a></div>
+            <div class="icon-wrap"><div class="divider "></div></div>
+            <div class="icon-wrap" style="width: 33%"><a href="#stats" role="tab" data-toggle="tab" onclick="report.stats(this)">Statistics</a></div>
+        </div>
+    </div>
+</div>
+<div class="tab-content dragging">
+    <div class="tab-pane active" id="export" data-snap-ignore="true">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!--<p class="p-danger center">Respect copyright low!</p>-->
+                    <p class="center text-uppercase">Choose interval</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xs-6">
+
+                    <div class="form-group">
+
+                        <input type="text" class="form-control inline datepicker"
+                               name="day" placeholder="sice" style="text-align: center"/>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-6">
+
+                    <div class="form-group">
+                        <input type="text" class="form-control inline datepicker"
+                               name="day" placeholder="until" style="text-align: center"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="center text-uppercase">Format</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xs-6 center" style="margin: 0 auto;float:none">
+                    <div class="form-group">
+                        <select name="" id="export-format" class="form-control">
+                            <option value="xsl" selected="selected">XSL</option>
+                            <option value="html">HTML</option>
+                            <option value="csv">CSV</option>
+                            <option value="pdf">PDF</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container-fluid lightblue-menu navigation">
+            <div class="icons">
+                <div class="icons-row">
+                    <div class="icon-wrap" style="width: 100%"><a href="#" onclick="" class="active">Export</a></div>
+                </div>
+            </div>
+        </div>
+</div>
+
+    <div class="tab-pane" id="tags" data-snap-ignore="true">
+
+    </div>
+
+
+    <div class="tab-pane" id="stats" data-snap-ignore="true">
+
+
+    </div>
+
+</div>

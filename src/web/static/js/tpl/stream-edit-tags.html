@@ -1,0 +1,94 @@
+<form id="tag-edit">
+
+{% var tags = ["Title", "Artist"]; %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class=" form-control" style="margin-bottom: 15px;border: 0">
+                <div class="form-group" style="display: table">
+                    <div style="display: table-cell;width: 135px">
+                        <div style="margin-left: 10px">Filename</div>
+                    </div>
+                    <div style="display: table-cell;">
+                        {%=o.media['original_filename']%}
+                    </div>
+                </div>
+
+                <div class="form-group" style="display: table;margin-bottom: 0">
+                    <div style="display: table-cell;width: 135px">
+                        <div style="margin-left: 10px">Size</div>
+                    </div>
+                    <div style="display: table-cell;">
+
+                        {%=(parseInt(o.media['size'])/1024/1024).toFixed(2)%} MB,
+
+                        {% var q = "", quality = o.media.quality; if (quality == 1) {q=500;}   %}
+                        {% if (quality == 0.9) {q=320;}   %}
+                        {% if (quality == 0.8) {q=256;}   %}
+                        {% if (quality == 0.7) {q=224;}   %}
+                        {% if (quality == 0.6) {q=192;}   %}
+                        {% if (quality == 0.5) {q=160;}   %}
+                        {% if (quality == 0.4) {q=128;}   %}
+                        {% if (quality == 0.3) {q=112;}   %}
+                        {% if (quality == 0.2) {q=96;}   %}
+                        {% if (quality == 0.1) {q=64;}   %}
+                        {% if (quality < 0.1) {q=32;}   %}
+
+                        {%=q%} kbit/s ({%=(q/8).toFixed(2)%} kB/s)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" name="media_id" value="{%=o.media._id%}"/>
+<input type="hidden" name="stream_id" value="{%=o.stream._id%}"/>
+
+{% for (var j=0, tag; tag=tags[j]; j++) { %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group form-control" style="display: table">
+                <div style="display: table-cell;width: 130px">
+                    <div style="margin-left: 10px"><label for="tag-{%=tag.toLowerCase()%}">{%=tag%}</label></div>
+                </div>
+                <div style="display: table-cell;">
+                    <input type="text" name="{%=tag.toLowerCase()%}" id="tag-{%=tag.toLowerCase()%}" value="{%if(o.media[tag.toLowerCase()]) { print(o.media[tag.toLowerCase()]) } %}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% } %}
+
+
+{% for (var j=0, tag; tag=o.stream.tags[j]; j++) { %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group form-control" style="display: table">
+                <div style="display: table-cell;width: 130px">
+                    <div style="margin-left: 10px"><label for="tag-{%=tag%}">{%=tag%}</label></div>
+                </div>
+                <div style="display: table-cell;">
+                    <input type="hidden" name="tag-name[]" value="{%=tag%}"/>
+                    <input type="text" name="tag-value[]" id="tag-{%=tag%}" value="{%if(o.media.tags[tag]) { print(o.media.tags[tag]) } %}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% } %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-secondary" onclick="browser.saveTags(this)">Save</a>
+        </div>
+    </div>
+</div>
+</form>

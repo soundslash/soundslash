@@ -1,0 +1,30 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+            {% if (o.tracks.length > 0) { %}
+            <form action="">
+                <p class="text-center">
+                    Are you sure you want to <span class="p-danger" style="display: inline-block"><strong>permanently delete</strong></span> following tracks?
+                </p>
+                <p class="text-center">
+                    {% for (var i=0, track; track=o.tracks[i]; i++) { %}
+                        <strong>{%=track.artist%} - {%=track.title%}</strong><br>
+                        <input type="hidden" name="elems[]" value="{%=track.id%}"/>
+                    {% } %}
+                </p>
+                <p class="center">
+                    <a href="#" onclick="browser.do_delete(this)" class="btn btn-primary">Delete</a>
+                </p>
+            </form>
+            {% } else { %}
+
+            <p class="text-center">
+                Please select tracks in media browser.
+            </p>
+            {% } %}
+        </div>
+    </div>
+</div>
+

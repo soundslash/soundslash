@@ -1,0 +1,89 @@
+@import "compass/utilities/general/clearfix";
+@import 'colors';
+@import 'libs/snap';
+@import 'libs/bootstrap-notify';
+@import 'libs/datepicker';
+@import 'typography';
+@import 'check';
+@import 'layout';
+@import 'content';
+
+
+/* Common */
+
+.center {
+  text-align: center;
+}
+
+.margin-left-5 {
+  margin-left: 5px;
+}
+
+.margin-right-10 {
+  margin-right: 10px;
+}
+.margin-left-10 {
+  margin-left: 10px;
+}
+.padding-top-5 {
+  padding-top: 5px;
+}
+
+.height-15 {
+  position: relative;
+  font-size: 1px;
+  display: block;
+  height: 15px;
+  width: 100%;
+}
+
+.clear {
+  @include clearfix;
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  position: relative;
+  background-color: #efefef;
+  margin: 7px 0;
+}
+
+.no-border {
+  border:0 !important;
+}
+
+.inline {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.height-80 {
+  height: 80px !important;
+}
+
+.divide {
+  border-bottom: #efefef 1px solid;
+}
+
+.boxsizing-border {
+  @include box-sizing(border-box);
+}
+
+
+.small {
+  font-size: 12px;
+}
+
+.smaller {
+  font-size: 10px;
+}
+
+.blue {
+  color: #5a86dc;
+}

@@ -1,0 +1,31 @@
+#!/usr/bin/expect -f
+set user [lindex $argv 0]
+set pass [lindex $argv 1]
+set host [lindex $argv 2]
+set cmds_file [lindex $argv 3]
+set log_filename [lindex $argv 4]
+set git_pass [lindex $argv 5]
+
+log_file "$log_filename"
+
+set f [open "$cmds_file"]
+set commands [split [read $f] "\n"]
+close $f
+
+spawn ssh $user@$host
+expect ".*'s password: "
+send -- "$pass\n"
+
+foreach cmd $commands {
+  expect {
+    "Password for " {
+      send "$git_pass\n"
+      expect "$ " { send "$cmd\n" }
+    }
+    "$ " {
+      send "$cmd\n"
+    }
+  }
+}
+
+expect "$ "

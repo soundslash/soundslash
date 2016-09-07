@@ -1,0 +1,82 @@
+
+<div id="body-wrap">
+
+    <div id="background-default" style="position:absolute;"></div>
+    <div id="background-in" style="position:absolute;display: none"></div>
+    <div id="background-out" style="position:absolute;display: block;"></div>
+
+    <div class="snap-drawers">
+        <div class="snap-drawer snap-drawer-left">
+            <div>
+            </div>
+        </div>
+        <div class="snap-drawer snap-drawer-right">
+            <div>
+                <h3>Stream menu</h3>
+
+                <ul class="stream-menu menu">
+                    <li class="item"><a data-menu-item="live" class="stream-menu-live" onclick="url('/stream.html', {action:'live'})">LIVE</a></li>
+                    <li class="item"><a data-menu-item="database" class="stream-menu-database" onclick="url('/stream.html', {action:'media'})">Media</a></li>
+                    <li class="item"><a data-menu-item="program" class="stream-menu-program" onclick="url('/stream.html', {action:'program'})">Program</a></li>
+                    <li class="item"><a data-menu-item="report" class="stream-menu-report" onclick="url('/stream.html', {action:'report'})">Report</a></li>
+                    <li class="item"><a data-menu-item="about" class="stream-menu-about" onclick="url('/stream.html', {action:'about'})">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="snap-content" style="background: transparent;">
+        <div id="toolbar">
+            <div class="container-fluid blue-bg">
+                <div class="row">
+                    <a id="open-left"></a>
+                    <img src="/static/img/logo3.png">
+                </div>
+            </div>
+        </div>
+        <div id="top-menu">
+            <div class="container-fluid">
+                <div class="row">
+                    <div style="position: relative">
+                        <div class="top-menu-bg"></div>
+                    </div>
+
+                    <div class="icons">
+                        <div class="icons-row">
+                            <div class="icon-wrap" onclick="url('/listen.html')" style="width: 33%"><a class="icon headphones"></a></div>
+                            <div class="icon-wrap"><div class="divider"></div></div>
+                            <div class="icon-wrap" onclick="url('/radio.html')" style="width: 33%"><a class="icon microphone active"></a></div>
+                            <div class="icon-wrap"><div class="divider"></div></div>
+                            <div class="icon-wrap" onclick="url('/user.html')" style="width: 33%"><a class="icon user"></a></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="max-width main blue-bg">
+
+        </div>
+
+
+        <div class="max-width filler"></div>
+        <div class="max-width footer blue-bg center">
+            <!--<img src="/static/img/footer.png" alt=""/>-->
+            <p style="margin:0;padding:5px; font-size: 12px">
+                <!--<span class="pull-right">Radio &middot; Streaming &middot; Revolution &middot; Love</span>-->
+                &#0169; SoundSlash&#0153; 2014 &middot; <a href="/admin/login.html" target="_self">Admin</a>
+            </p>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!--<div id="bottom-player" data-snap-ignore="true">-->
+
+<!--</div>-->
+
+<div id="fb-root"></div>

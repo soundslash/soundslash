@@ -1,0 +1,293 @@
+digraph pipeline {
+  rankdir=LR;
+  fontname="sans";
+  fontsize="10";
+  labelloc=t;
+  nodesep=.1;
+  ranksep=.2;
+  label="<GstPipeline>\npipeline\n[>]";
+  node [style=filled, shape=box, fontsize="9", fontname="sans", margin="0.0,0.0"];
+  edge [labelfontsize="6", fontsize="9", fontname="monospace"];
+
+  subgraph cluster_bin2_0x34022e0 {
+    fontname="Bitstream Vera Sans";
+    fontsize="8";
+    style=filled;
+    color=black;
+
+    label="GstBin\nbin2\n[>]";
+    _proxypad4_0x356e720 [color=black, fillcolor="#ffdddd", label="proxypad4\n[>][bfgsb]", height="0.2", style="filled,solid"];
+  _proxypad4_0x356e720 -> bin2_0x34022e0_src_0x356d740 [style=dashed, minlen=0]
+    bin2_0x34022e0_src_0x356d740 [color=black, fillcolor="#ffdddd", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+    fillcolor="#ffffff";
+    subgraph cluster_model_gridfssource_gridfssource37_0x3786030 {
+      fontname="Bitstream Vera Sans";
+      fontsize="8";
+      style=filled;
+      color=black;
+
+      label="Model+GridFSSource+GridFSSource\nmodel+gridfssource+gridfssource37\n[>]";
+      model_gridfssource_gridfssource37_0x3786030_src_0x36b1820 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      fillcolor="#ffaaaa";
+    }
+
+    model_gridfssource_gridfssource37_0x3786030_src_0x36b1820 -> decodebin0_0x33b8420_sink_0x356d590 [label="ANY"]
+    subgraph cluster_queue3_0x35647f0 {
+      fontname="Bitstream Vera Sans";
+      fontsize="8";
+      style=filled;
+      color=black;
+
+      label="GstQueue\nqueue3\n[>]\ncurrent-level-buffers=6\ncurrent-level-bytes=24576\ncurrent-level-time=139319728";
+      queue3_0x35647f0_sink_0x35ac610 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      queue3_0x35647f0_src_0x35ac790 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      fillcolor="#aaffaa";
+    }
+
+    queue3_0x35647f0_src_0x35ac790 -> _proxypad4_0x356e720 [label="audio/x-raw-int\l               width: 16\l                rate: 44100\l            channels: 2\l          endianness: 1234\l               depth: 16\l              signed: true\l"]
+    subgraph cluster_volume0_0x35b6040 {
+      fontname="Bitstream Vera Sans";
+      fontsize="8";
+      style=filled;
+      color=black;
+
+      label="GstVolume\nvolume0\n[>]";
+      volume0_0x35b6040_sink_0x35ac310 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      volume0_0x35b6040_src_0x35ac490 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      fillcolor="#aaffaa";
+    }
+
+    volume0_0x35b6040_src_0x35ac490 -> queue3_0x35647f0_sink_0x35ac610 [label="audio/x-raw-int\l               width: 16\l                rate: 44100\l            channels: 2\l          endianness: 1234\l               depth: 16\l              signed: true\l"]
+    subgraph cluster_capsfilter0_0x35ae0f0 {
+      fontname="Bitstream Vera Sans";
+      fontsize="8";
+      style=filled;
+      color=black;
+
+      label="GstCapsFilter\ncapsfilter0\n[>]\ncaps=audio/x-raw-int, channels=(int)2, endianness=(int)1234, rate=(int)44100, width=(int)16, depth=(int)16, signed=(boolean)true";
+      capsfilter0_0x35ae0f0_sink_0x35ac010 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      capsfilter0_0x35ae0f0_src_0x35ac190 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      fillcolor="#aaffaa";
+    }
+
+    capsfilter0_0x35ae0f0_src_0x35ac190 -> volume0_0x35b6040_sink_0x35ac310 [label="audio/x-raw-int\l               width: 16\l                rate: 44100\l            channels: 2\l          endianness: 1234\l               depth: 16\l              signed: true\l"]
+    subgraph cluster_audioresample0_0x35aa010 {
+      fontname="Bitstream Vera Sans";
+      fontsize="8";
+      style=filled;
+      color=black;
+
+      label="GstAudioResample\naudioresample0\n[>]";
+      audioresample0_0x35aa010_sink_0x3583cb0 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      audioresample0_0x35aa010_src_0x3583e30 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      fillcolor="#aaffaa";
+    }
+
+    audioresample0_0x35aa010_src_0x3583e30 -> capsfilter0_0x35ae0f0_sink_0x35ac010 [label="audio/x-raw-int\l               width: 16\l                rate: 44100\l            channels: 2\l          endianness: 1234\l               depth: 16\l              signed: true\l"]
+    subgraph cluster_audioconvert1_0x3410470 {
+      fontname="Bitstream Vera Sans";
+      fontsize="8";
+      style=filled;
+      color=black;
+
+      label="GstAudioConvert\naudioconvert1\n[>]";
+      audioconvert1_0x3410470_sink_0x35839b0 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      audioconvert1_0x3410470_src_0x3583b30 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      fillcolor="#aaffaa";
+    }
+
+    audioconvert1_0x3410470_src_0x3583b30 -> audioresample0_0x35aa010_sink_0x3583cb0 [label="audio/x-raw-int\l               width: 16\l                rate: 44100\l            channels: 2\l          endianness: 1234\l               depth: 16\l              signed: true\l"]
+    subgraph cluster_decodebin0_0x33b8420 {
+      fontname="Bitstream Vera Sans";
+      fontsize="8";
+      style=filled;
+      color=black;
+
+      label="GstDecodeBin\ndecodebin0\n[>]";
+      _proxypad3_0x356e580 [color=black, fillcolor="#ddddff", label="proxypad3\n[>][bfgsb]", height="0.2", style="filled,solid"];
+    decodebin0_0x33b8420_sink_0x356d590 -> _proxypad3_0x356e580 [style=dashed, minlen=0]
+      decodebin0_0x33b8420_sink_0x356d590 [color=black, fillcolor="#ddddff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      _proxypad42_0x36a1000 [color=black, fillcolor="#ffdddd", label="proxypad42\n[>][bfgsb]", height="0.2", style="filled,dotted"];
+    _proxypad42_0x36a1000 -> decodebin0_0x33b8420_src0_0x369f090 [style=dashed, minlen=0]
+      decodebin0_0x33b8420_src0_0x369f090 [color=black, fillcolor="#ffdddd", label="src0\n[>][bfgsb]", height="0.2", style="filled,dotted"];
+      fillcolor="#ffffff";
+      subgraph cluster_vorbisdec37_0x2644000 {
+        fontname="Bitstream Vera Sans";
+        fontsize="8";
+        style=filled;
+        color=black;
+
+        label="GstVorbisDec\nvorbisdec37\n[>]";
+        vorbisdec37_0x2644000_sink_0x3737cc0 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+        vorbisdec37_0x2644000_src_0x36b19a0 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+        fillcolor="#aaffaa";
+      }
+
+      vorbisdec37_0x2644000_src_0x36b19a0 -> _proxypad42_0x36a1000 [label="audio/x-raw-float\l                rate: 44100\l            channels: 2\l          endianness: 1234\l               width: 32\l"]
+      subgraph cluster_queue41_0x3565750 {
+        fontname="Bitstream Vera Sans";
+        fontsize="8";
+        style=filled;
+        color=black;
+
+        label="GstQueue\nqueue41\n[>]\nmax-size-buffers=0\nmax-size-bytes=8192\nmax-size-time=0";
+        queue41_0x3565750_sink_0x3737b40 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+        queue41_0x3565750_src_0x37b59c0 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+        fillcolor="#aaffaa";
+      }
+
+      queue41_0x3565750_src_0x37b59c0 -> vorbisdec37_0x2644000_sink_0x3737cc0 [label="audio/x-vorbis\l                rate: 44100\l            channels: 2\l        streamheader: < 01766f726269730000... >\l"]
+      subgraph cluster_oggdemux37_0x3596b90 {
+        fontname="Bitstream Vera Sans";
+        fontsize="8";
+        style=filled;
+        color=black;
+
+        label="GstOggDemux\noggdemux37\n[>]";
+        oggdemux37_0x3596b90_sink_0x37b5840 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+        oggdemux37_0x3596b90_serial_415fb9b6_0x375f040 [color=black, fillcolor="#ffaaaa", label="serial_415fb9b6\n[>][bfgsb]", height="0.2", style="filled,solid"];
+        fillcolor="#aaffaa";
+      }
+
+      oggdemux37_0x3596b90_serial_415fb9b6_0x375f040 -> queue41_0x3565750_sink_0x3737b40 [label="audio/x-vorbis\l                rate: 44100\l            channels: 2\l        streamheader: < 01766f726269730000... >\l"]
+      subgraph cluster_typefind_0x33ff270 {
+        fontname="Bitstream Vera Sans";
+        fontsize="8";
+        style=filled;
+        color=black;
+
+        label="GstTypeFindElement\ntypefind\n[>]\ncaps=application/ogg";
+        typefind_0x33ff270_sink_0x3583530 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+        typefind_0x33ff270_src_0x35836b0 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+        fillcolor="#aaffaa";
+      }
+
+      typefind_0x33ff270_src_0x35836b0 -> oggdemux37_0x3596b90_sink_0x37b5840 [label="application/ogg\l"]
+      _proxypad3_0x356e580 -> typefind_0x33ff270_sink_0x3583530 [label="ANY"]
+    }
+
+    decodebin0_0x33b8420_src0_0x369f090 -> audioconvert1_0x3410470_sink_0x35839b0 [label="audio/x-raw-float\l                rate: 44100\l            channels: 2\l          endianness: 1234\l               width: 32\l"]
+  }
+
+  bin2_0x34022e0_src_0x356d740 -> adder0_0x33ce050_sink0_0x35ac910 [label="audio/x-raw-int\l               width: 16\l                rate: 44100\l            channels: 2\l          endianness: 1234\l               depth: 16\l              signed: true\l"]
+  subgraph cluster_udpsink0_0x3578f10 {
+    fontname="Bitstream Vera Sans";
+    fontsize="8";
+    style=filled;
+    color=black;
+
+    label="GstUDPSink\nudpsink0\n[>]\nlast-buffer=???\nbytes-to-serve=56655\nbytes-served=56655\nsock=15\nclients=\"127.0.0.1:5000\"\nhost=\"127.0.0.1\"\nport=5000";
+    udpsink0_0x3578f10_sink_0x35664f0 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+    fillcolor="#aaaaff";
+  }
+
+  subgraph cluster_bin0_0x3402000 {
+    fontname="Bitstream Vera Sans";
+    fontsize="8";
+    style=filled;
+    color=black;
+
+    label="GstBin\nbin0\n[>]";
+    _proxypad0_0x356e0a0 [color=black, fillcolor="#ddddff", label="proxypad0\n[>][bfgsb]", height="0.2", style="filled,solid"];
+  bin0_0x3402000_sink_0x356d080 -> _proxypad0_0x356e0a0 [style=dashed, minlen=0]
+    bin0_0x3402000_sink_0x356d080 [color=black, fillcolor="#ddddff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+    _proxypad1_0x356e240 [color=black, fillcolor="#ffdddd", label="proxypad1\n[>][bfgsb]", height="0.2", style="filled,solid"];
+  _proxypad1_0x356e240 -> bin0_0x3402000_src_0x356d230 [style=dashed, minlen=0]
+    bin0_0x3402000_src_0x356d230 [color=black, fillcolor="#ffdddd", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+    fillcolor="#ffffff";
+    subgraph cluster_oggmux0_0x356b000 {
+      fontname="Bitstream Vera Sans";
+      fontsize="8";
+      style=filled;
+      color=black;
+
+      label="GstOggMux\noggmux0\n[>]";
+      oggmux0_0x356b000_sink_327482169_0x35661f0 [color=black, fillcolor="#aaaaff", label="sink_327482169\n[>][bfgsb]", height="0.2", style="filled,dashed"];
+      oggmux0_0x356b000_src_0x3566070 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      fillcolor="#aaffaa";
+    }
+
+    oggmux0_0x356b000_src_0x3566070 -> _proxypad1_0x356e240 [label="application/ogg\l        streamheader: < 4f6767530002000000... >\l"]
+    subgraph cluster_vorbisenc0_0x2612dc0 {
+      fontname="Bitstream Vera Sans";
+      fontsize="8";
+      style=filled;
+      color=black;
+
+      label="GstVorbisEnc\nvorbisenc0\n[>]\nperfect-timestamp=TRUE\nmark-granule=TRUE\nquality=0.000000\nlast-message=\"encoding at quality level 0.00\"";
+      vorbisenc0_0x2612dc0_sink_0x33cfc60 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      vorbisenc0_0x2612dc0_src_0x33cfde0 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      fillcolor="#aaffaa";
+    }
+
+    vorbisenc0_0x2612dc0_src_0x33cfde0 -> oggmux0_0x356b000_sink_327482169_0x35661f0 [label="audio/x-vorbis\l        streamheader: < 01766f726269730000... >\l"]
+    subgraph cluster_audioconvert0_0x34100b0 {
+      fontname="Bitstream Vera Sans";
+      fontsize="8";
+      style=filled;
+      color=black;
+
+      label="GstAudioConvert\naudioconvert0\n[>]";
+      audioconvert0_0x34100b0_sink_0x33cf660 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      audioconvert0_0x34100b0_src_0x33cf7e0 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      fillcolor="#aaffaa";
+    }
+
+    audioconvert0_0x34100b0_src_0x33cf7e0 -> vorbisenc0_0x2612dc0_sink_0x33cfc60 [label="audio/x-raw-float\l                rate: 44100\l            channels: 2\l          endianness: 1234\l               width: 32\l"]
+    subgraph cluster_queue0_0x3564040 {
+      fontname="Bitstream Vera Sans";
+      fontsize="8";
+      style=filled;
+      color=black;
+
+      label="GstQueue\nqueue0\n[>]\ncurrent-level-buffers=74\ncurrent-level-bytes=179456\ncurrent-level-time=1017324263";
+      queue0_0x3564040_sink_0x33cf960 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      queue0_0x3564040_src_0x33cfae0 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+      fillcolor="#aaffaa";
+    }
+
+    queue0_0x3564040_src_0x33cfae0 -> audioconvert0_0x34100b0_sink_0x33cf660 [label="audio/x-raw-int\l               width: 16\l                rate: 44100\l            channels: 2\l          endianness: 1234\l               depth: 16\l              signed: true\l"]
+    _proxypad0_0x356e0a0 -> queue0_0x3564040_sink_0x33cf960 [label="audio/x-raw-int\l               width: 16\l                rate: 44100\l            channels: 2\l          endianness: 1234\l               depth: 16\l              signed: true\l"]
+  }
+
+  bin0_0x3402000_src_0x356d230 -> udpsink0_0x3578f10_sink_0x35664f0 [label="application/ogg\l        streamheader: < 4f6767530002000000... >\l"]
+  subgraph cluster_tee0_0x33ff010 {
+    fontname="Bitstream Vera Sans";
+    fontsize="8";
+    style=filled;
+    color=black;
+
+    label="GstTee\ntee0\n[>]\nnum-src-pads=1";
+    tee0_0x33ff010_sink_0x33cf4e0 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+    tee0_0x33ff010_src0_0x3566370 [color=black, fillcolor="#ffaaaa", label="src0\n[>][bfgsb]", height="0.2", style="filled,dashed"];
+    fillcolor="#aaffaa";
+  }
+
+  tee0_0x33ff010_src0_0x3566370 -> bin0_0x3402000_sink_0x356d080 [label="audio/x-raw-int\l               width: 16\l                rate: 44100\l            channels: 2\l          endianness: 1234\l               depth: 16\l              signed: true\l"]
+  subgraph cluster_audiorate0_0x33fa0e0 {
+    fontname="Bitstream Vera Sans";
+    fontsize="8";
+    style=filled;
+    color=black;
+
+    label="GstAudioRate\naudiorate0\n[>]\nin=1020\nout=1019";
+    audiorate0_0x33fa0e0_sink_0x33cf1e0 [color=black, fillcolor="#aaaaff", label="sink\n[>][bfgsb]", height="0.2", style="filled,solid"];
+    audiorate0_0x33fa0e0_src_0x33cf360 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+    fillcolor="#aaffaa";
+  }
+
+  audiorate0_0x33fa0e0_src_0x33cf360 -> tee0_0x33ff010_sink_0x33cf4e0 [label="audio/x-raw-int\l               width: 16\l                rate: 44100\l            channels: 2\l          endianness: 1234\l               depth: 16\l              signed: true\l"]
+  subgraph cluster_adder0_0x33ce050 {
+    fontname="Bitstream Vera Sans";
+    fontsize="8";
+    style=filled;
+    color=black;
+
+    label="GstAdder\nadder0\n[>]";
+    adder0_0x33ce050_sink0_0x35ac910 [color=black, fillcolor="#aaaaff", label="sink0\n[>][bfgsb]", height="0.2", style="filled,dashed"];
+    adder0_0x33ce050_src_0x33cf060 [color=black, fillcolor="#ffaaaa", label="src\n[>][bfgsb]", height="0.2", style="filled,solid"];
+    fillcolor="#aaffaa";
+  }
+
+  adder0_0x33ce050_src_0x33cf060 -> audiorate0_0x33fa0e0_sink_0x33cf1e0 [label="audio/x-raw-int\l               width: 16\l                rate: 44100\l            channels: 2\l          endianness: 1234\l               depth: 16\l              signed: true\l"]
+}

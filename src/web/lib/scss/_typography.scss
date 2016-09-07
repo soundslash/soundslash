@@ -1,0 +1,58 @@
+@import "compass/css3";
+
+//@include font-face("GeosansLight", font-files("/static/assets/GeosansLight.ttf"));
+@include font-face("SeganLight", font-files("/static/assets/Segan-Light.ttf"));
+
+body, h1, h2, h3 {
+  font-family: "Arial";
+}
+
+@mixin input-placeholder {
+  &.placeholder { @content; }
+  &:-moz-placeholder { @content; }
+  &::-moz-placeholder { @content; }
+  &:-ms-input-placeholder { @content; }
+  &::-webkit-input-placeholder { @content; }
+}
+.form-control {
+  @include input-placeholder {
+    color: #000;
+  }
+}
+
+.text-medium-white {
+  font-size: 18px;
+  color: white;
+}
+
+.small {
+  font-size: 12px;
+}
+
+.medium {
+  font-size: 18px;
+}
+
+.large {
+  font-size: 38px;
+}
+
+.tab-content {
+  color: white;
+}
+
+.blue {
+  color: #1a4c6d;
+}
+
+.strong {
+  font-weight: bold;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.pad {
+  margin-bottom: 15px;
+}

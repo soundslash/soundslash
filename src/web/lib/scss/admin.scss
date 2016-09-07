@@ -1,0 +1,17 @@
+@import "compass/utilities/general/clearfix";
+@import 'admin/layout';
+@import 'colors';
+@import 'typography';
+@import 'admin/typography';
+@import 'libs/datepicker';
+
+
+.inline {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+.center {
+  text-align: center;
+}

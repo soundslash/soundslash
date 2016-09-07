@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# npm install -g uglify-js
+# npm install -g blueimp-tmpl
+#
+# Then run this script
+#
+tmpl.js tpl/*.html > lib/tmpls.min.js
+

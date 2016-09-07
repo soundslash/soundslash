@@ -1,0 +1,60 @@
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+
+            <form class="form-horizontal" id="listeners-form">
+
+                <input type="hidden" name="stream_ids[]" value="{%=o.stream_id%}">
+
+                <div class="row" style="margin-bottom: 15px">
+                    <div class="col-md-6 col-xs-6 center" style="margin: 0 auto;float:none">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="center text-uppercase">Choose interval</p>
+                            </div>
+                        </div>
+
+                        <select class="chosen-select inline form-control" name="range" style="text-align: center">
+                            <option value="month" selected="">Month</option>
+                            <option value="day">Day</option>
+                            <option value="year">Year</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="row" style="margin-bottom: 15px">
+
+                    <div class="col-md-6 col-xs-6 center" style="margin: 0 auto;float:none">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="center text-uppercase">Begin from</p>
+                            </div>
+                        </div>
+                        <input type="text" id="datepicker" class="form-control inline datepicker"
+                               name="day" value="{%=o.last_month%}" style="text-align: center"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="center text-uppercase">Listeners</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="holder" style="height:180px"></div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

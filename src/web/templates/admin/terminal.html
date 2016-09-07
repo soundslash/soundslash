@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container-fluid max-width">
+    <div class="row-fluid">
+        <div class="col-md-12 content-wrapper">
+
+            <div class="submenu">
+                {% include "_stream_menu.html" %}
+            </div>
+            <div class="content" role="main">
+                <div class="row-fluid">
+                    <div class="col-md-12">
+
+                        <h1>Terminal</h1>
+
+                        <form id="terminal" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Local IP" name="local-ip"
+                                       value="{{pipeline['local_ip']}}">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Port" name="port"
+                                       value="{{pipeline['port']}}">
+                            </div>
+                            <div class="form-group">
+                                <textarea id="area1" class="form-control" placeholder="Command" name="command"
+                                          style="height: 200px"
+                                          onkeypress="if (event.keyCode == 13) submitCommand()"></textarea>
+                            </div>
+                            <div class="success" style="display:none"></div>
+                            <div class="error" style="display:none"></div>
+                            <div class="form-group">
+                                <input type="submit" value="Run commnad" class="btn btn-primary login-submit">
+                            </div>
+                            {% module xsrf_form_html() %}
+                        </form>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}
+
+
+{% block bottom %}
+
+{% end %}
+
+{% block js %}
+<script src="{{ static_url('js/lib/jquery.a-tools-1.4.1.js') }}"></script>
+<script src="{{ static_url('js/lib/jquery.asuggest.js') }}"></script>
+<script>
+    var suggests = ["use", "start", "stop", "scale", "rescale", "rescale force", "dump_dot_file", "next", "playlist"];
+    $("#area1").asuggest(suggests);
+
+    function submitCommand() {
+
+        $('#terminal').loading();
+        $.ajax({
+            type: 'POST',
+            url: "/admin/stream/{{stream_id}}/terminal.html",
+            data: $('#terminal').serialize(),
+            success: function (data) {
+                if (data.error) {
+                    $(".success").hide();
+                    $(".error").html('<div class="alert alert-danger"><pre>' + JSON.stringify(data, null, 4) + '</pre></div>');
+                    $(".error").show();
+                }
+                else {
+                    $(".error").hide();
+                    $(".success").html('<div class="alert alert-success"><pre>' + JSON.stringify(data, null, 4) + '</pre></div>');
+                    $(".success").show();
+                }
+                $('#terminal').loading_stop();
+
+            }
+        });
+
+    }
+
+    $('#terminal').submit(function () {
+        submitCommand();
+        return false;
+    });
+
+    // implement JSON.stringify serialization
+    JSON.stringify = JSON.stringify || function (obj) {
+        var t = typeof (obj);
+        if (t != "object" || obj === null) {
+            // simple data type
+            if (t == "string") obj = '"' + obj + '"';
+            return String(obj);
+        }
+        else {
+            // recurse array or object
+            var n, v, json = [], arr = (obj && obj.constructor == Array);
+            for (n in obj) {
+                v = obj[n];
+                t = typeof(v);
+                if (t == "string") v = '"' + v + '"';
+                else if (t == "object" && v !== null) v = JSON.stringify(v);
+                json.push((arr ? "" : '"' + n + '":') + String(v));
+            }
+            return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
+        }
+    };
+</script>
+{% end %}

@@ -1,0 +1,18 @@
+DEBUG:root:StreamingServerSelection response: {'public_ip': u'192.168.0.2', 'mount': u'/example4.ogg', 'port': 8000, 'db_obj': {u'public_ip': u'192.168.0.2', u'local_ip': u'192.168.0.2', u'created_at': datetime.datetime(2013, 8, 19, 14, 4, 41, 879000), u'level': 0.0, u'down': False, u'streaming': {u'protocol': None, u'stream': u'521b0eba6e955208c4357a1c', u'mount': u'/example4.ogg', u'caps': None, u'streaming': False, u'listeners': 0, u'max_listeners': 8, u'password': u'hackme', u'quality': None}, u'user': u'm@mby.sk', u'_id': ObjectId('521225f96e95521003f6c534'), u'type': u'streaming', u'port': 8000}}
+DEBUG:root:Streamer::__init__(): Constructing pipeline
+DEBUG:root:Streamer::link_quiet_source(): Linking quiet source
+DEBUG:root:DistributeBin::__init__(): Initializing
+DEBUG:root:DistributeBin::__init__(): Initialization finished
+DEBUG:root:DistributeBin::link_and_unblock(): Linking
+DEBUG:root:DistributeBin::link_and_unblock(): Linked
+DEBUG:root:StreamBin::link_and_unblock(): Linking and unblocking stream
+DEBUG:root:StreamBin::link_and_unblock(): Adding stream to player pipeline
+DEBUG:root:StreamBin::link_and_unblock(): Stream src linked to adder_sink
+DEBUG:root:StreamBin::link_and_unblock(): Unblocking src
+DEBUG:root:Streamer::run(): Starting pipeline
+DEBUG:root:StartStreaming response: {'public_ip': u'192.168.0.2', 'mount': u'/example4.ogg', 'port': 8000}
+DEBUG:root:[{'msg': u'Stream set to 521b0eba6e955208c4357a1c'}, {'public_ip': u'192.168.0.2', 'mount': u'/example4.ogg', 'port': 8000}]
+INFO:tornado.access:200 POST /run-command (192.168.0.2) 66.40ms
+[1m[32mpipeline [34m$ [0mRunning command: use 521b0eba6e955208c4357a1c
+Running command: start
+a1c 

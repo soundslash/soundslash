@@ -1,0 +1,295 @@
+<div class="blocks">
+    <div class="block">
+
+        <form id="fileupload" name="fileupload">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <p class="frame text-center">
+                            Drop files somewhere on the screen<br>
+                            or click to <a href="" class="p-danger" id="upload_link">upload</a>.<br/>
+                            <input type="file" multiple="" name="files[]" id="upload" accept="audio/*" capture="camera">
+                            It may take some time to process the files.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div id="fileupload-more" style="display: none">
+
+                            <h1 class="text-center text-uppercase">
+                                Tag your tracks
+                            </h1>
+
+                            <div role="presentation">
+                                <div class="files" data-toggle="modal-gallery" data-target="#modal-gallery">
+
+                                </div>
+                            </div>
+
+                            <input type="hidden" value="{%=o.stream._id%}" name="stream-id">
+                            <input type="hidden" value="{%=o.group_id%}" name="group-id">
+                            <input type="hidden" value="false" name="create">
+
+
+                            <div id="fileupload-submit">
+                                <div class="centerize-430 center">
+                                    <div class="fileupload-buttonbar">
+                                        <div class="form-group">
+                                            <button class="btn btn-primary start">
+                                                <i class="icon-upload icon-white"></i>
+                                                <span>Upload</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="progress-create" style="display:none">
+                        <label>Prepairing your media</label>
+
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-blue" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <span class="sr-only">0% Complete</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container-fluid lightblue-menu lightblue-bg edit-db-menu">
+            <div class="icons">
+                <div class="icons-row"  role="tablist">
+                    <div class="icon-wrap" style="width: 50%"><a href="#edit-playlists" class="active" role="tab" data-toggle="tab" onclick="browser.editPlaylists(this)">Playlists</a></div>
+                    <div class="icon-wrap"><div class="divider "></div></div>
+                    <div class="icon-wrap" style="width: 50%"><a href="#edit-favorites" role="tab" data-toggle="tab" onclick="browser.editFavorites(this)">Quick choice</a></div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="edit-playlists">
+
+
+                <form id="edit-playlistssearch-form">
+                    <div class="search-holder">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                            <input type="text" class="form-control" placeholder="Search in playlists" id="edit-playlistssearch" name="search">
+
+                            <input type="hidden" name="group_id" value="null">
+                            <input type="hidden" name="page" value="1">
+                            <input type="hidden" name="groups" value="true">
+                        </div>
+                    </div>
+                </form>
+
+                <div class="table-responsive">
+                    <table class="table create-table">
+                        <tr>
+                            <td class="text-uppercase">
+                                <a onclick="browser.create_playlist()">
+                                    <img src="/static/img/icons/tab-plus.png" alt="" style="vertical-align: middle;margin-right: 10px"/><p style="vertical-align: middle;display: inline-block;margin-bottom: 0">Create new playlist</p>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr class="hide create-playlist">
+                            <td colspan='3' style="padding-top: 4px; padding-bottom: 3px">
+                                <div style="width: 100%;display: table;margin: 0 auto">
+                                    <div class="center-icon">
+                                        <input name="playlist_name" type="text" value="" class="form-control white nodrag"
+                                               placeholder="Playlist name"/>
+                                    </div>
+                                    <div class="center-icon" style="width: 130px">
+                                        <a  onclick="browser.do_create_playlist(this)" class="p-danger">Create</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="edit-playlists swiping" data-snap-ignore="true">
+                    <form id="edit-playlists-form">
+                        <div class="table-responsive">
+                            <table class="table draggable"
+                                   id="edit-playlists-table">
+                                <tbody class="edit-playlists-body sortable-edit-playlists">
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="tab-pane" id="edit-favorites">
+
+                <form id="edit-favoritessearch-form">
+                    <div class="search-holder">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                            <input type="text" class="form-control" placeholder="Search in quick choice" id="edit-favoritessearch" name="search">
+
+                            <input type="hidden" name="favorites" value="true">
+                            <input type="hidden" name="page" value="1">
+                            <input type="hidden" name="group_id" value="{%=o.stream.fav_group_id%}">
+                        </div>
+                    </div>
+                </form>
+
+                <div class="edit-favorites" data-snap-ignore="true">
+
+                    <form id="edit-favorites-form">
+                        <div class="table-responsive">
+                            <table class="table draggable"
+                                   id="edit-favorites-table">
+                                <tbody class="edit-favorites-body sortable-edit-favorites">
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="block">
+
+        <div class="container-fluid lightblue-menu lightblue-bg db-menu">
+            <div class="icons">
+                <div class="icons-row"  role="tablist">
+                    <div class="icon-wrap" style="width: 33%"><a href="#database" class="active" role="tab" data-toggle="tab" onclick="browser.database(this)">Media</a></div>
+                    <div class="icon-wrap"><div class="divider "></div></div>
+                    <div class="icon-wrap" style="width: 33%"><a href="#playlists" role="tab" data-toggle="tab" onclick="browser.databasePlaylists(this)">Playlists</a></div>
+                    <div class="icon-wrap"><div class="divider "></div></div>
+                    <div class="icon-wrap" style="width: 33%"><a href="#favorites" role="tab" data-toggle="tab" onclick="browser.databaseFavorites(this)">Quick choice</a></div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="tab-content dragging">
+            <div class="tab-pane active database-in-media" id="database" data-snap-ignore="true">
+
+
+                <form id="groupsearch-form">
+                    <div class="search-holder">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                            <input type="text" class="form-control" placeholder="Search in media" id="groupsearch" name="search">
+                            <input type="hidden" class="form-control" name="group_id" value="{%=o.group_id%}">
+                            <input type="hidden" class="form-control" name="page" value="1">
+                            <input type="hidden" class="form-control" name="order" value="artist">
+                            <input type="hidden" class="form-control" name="asc" value="1">
+                        </div>
+                    </div>
+                </form>
+
+
+                <div class="table-responsive">
+                    <table class="table sort-table">
+                    </table>
+                </div>
+                <div class="table-responsive">
+                    <table id="group" class="table draggable">
+
+                        <tbody class="group-body sortable-group">
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="tab-pane" id="playlists" data-snap-ignore="true">
+
+
+                <form id="playlistssearch-form">
+                    <div class="search-holder">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                            <input type="text" class="form-control" placeholder="Search in playlists" id="playlistssearch" name="search">
+
+                            <input type="hidden" name="group_id" value="null">
+                            <input type="hidden" name="page" value="1">
+                            <input type="hidden" name="groups" value="true">
+                        </div>
+                    </div>
+                </form>
+
+
+                <div class="table-responsive">
+                    <table id="playlists-table" class="table draggable">
+                        <tbody class="playlists-body sortable-playlist">
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+            <div class="tab-pane" id="favorites" data-snap-ignore="true">
+
+                <form id="favoritessearch-form">
+                    <div class="search-holder">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                            <input type="text" class="form-control" placeholder="Search in quick choice" id="favoritessearch" name="search">
+
+                            <input type="hidden" name="favorites" value="true">
+                            <input type="hidden" name="page" value="1">
+                            <input type="hidden" name="group_id" value="{%=o.stream.fav_group_id%}">
+                        </div>
+                    </div>
+                </form>
+
+
+                <div class="table-responsive">
+                    <table id="favorites-table" class="table draggable">
+                        <tbody class="favorites-body sortable-favorites">
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

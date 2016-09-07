@@ -1,0 +1,40 @@
+
+
+{% if equals("session", "expired") %}
+<div class="alert alert-danger">
+    Your session has expired.
+</div>
+{% end %}
+
+{% if equals("sign_up", "success") %}
+<div class="alert alert-success">
+    <strong>Well done!</strong> You successfully signed up, now please confirm your email address and continue with login.
+</div>
+{% end %}
+
+{% if equals("confirmed", True) %}
+<div class="alert alert-success">
+    <strong>Well done!</strong> You successfully confirmed your account.
+</div>
+{% end %}
+
+{% if equals("confirmed", False) %}
+<div class="alert alert-danger">
+    <strong>Ouuups!</strong> Something went wrong while confirming your account, please try again.
+</div>
+{% end %}
+
+<form id="login" action="/login.html" method="post">
+
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Email" name="email">
+    </div>
+    <div class="form-group">
+        <input type="password" class="form-control" placeholder="Password" name="password">
+    </div>
+
+    <div class="error" style="display:none"></div>
+    <div class="form-group">
+        <input type="submit" value="Sign in" class="btn btn-primary login-submit">
+    </div>
+</form>

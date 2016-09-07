@@ -1,0 +1,36 @@
+@import "compass/layout/stretching";
+@import "compass/css3";
+@import "compass/utilities";
+//@import "compass/css3/transform-legacy";
+@import "compass/utilities/general/min";
+
+.loading-bg {
+  width: 100%;
+  height: 100%;
+  top:0;
+  left: 0;
+  position: absolute;
+  background-color: #000;
+  @include opacity(0.80);
+  z-index: 3;
+}
+.loading-info {
+    position: absolute;
+  z-index: 4;
+}
+
+.loading-info-center {
+//  position: absolute;
+  z-index: 4;
+  position: fixed !important;
+  top: 50% !important;
+//    margin-top: -16px;
+//  left: 50% !important;
+//  margin-left: -16px;
+  left: inherit;
+  overflow: hidden;
+  text-align: center;
+  img {
+    margin: 0 auto;
+  }
+}

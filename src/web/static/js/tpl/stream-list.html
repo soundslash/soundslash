@@ -1,0 +1,55 @@
+{% if (o.page == 1) { %}
+<h1>{%=o.title%}</h1>
+
+<div class="row">
+    {% } %}
+    {% for (var i=0, stream; stream=o.streams[i]; i++) { %}
+    <div class="col-sm-12 col-md-12 col-lg-12 stream-item">
+        <!--<div class="">-->
+        <div class="pic">
+
+            <a data-stream="{%=stream._id%}" onclick="player.play_stop(this);return false"
+               >
+                <img src="{%if (stream.picture) {print('/image.jpg?id='+stream.picture+'&thumb=135x135')} else {print('/static/img/media_default.png')} %}" alt="" class="img-responsive"/>
+            </a>
+        </div>
+        <div class="details">
+            <h2>
+                {%=stream.name%}
+                {% if (!stream.public) { %}
+                <span class="p-danger">Password-protected</span>
+                {% } %}
+            </h2>
+            <div class="genres">
+                {% for (var j=0, genre; genre=stream.genres[j]; j++) { %}
+                <span class="label label-primary">{%=genre%}</span>
+                {% } %}
+            </div>
+            <p class="more">
+                Current listeners: 315<br/>
+                Listeners: 381 327
+            </p>
+            <!--</div>-->
+        </div>
+    </div>
+    {% } %}
+
+    {% if (i == 0) { %}
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <p>No more results</p>
+    </div>
+    {% } %}
+
+    {% if (o.page == 1) { %}
+</div>
+{% } %}
+
+{% if (o.streams.length >= 10) { %}
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 center">
+        <p>
+            <button class="btn btn-primary show-more" data-page="{%=o.page%}" data-search="{%=o.search%}">Show more</button>
+        </p>
+    </div>
+</div>
+{% } %}

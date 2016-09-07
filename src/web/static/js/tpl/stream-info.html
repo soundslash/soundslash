@@ -1,0 +1,56 @@
+
+
+<h1 class="text-center text-uppercase">
+    Your stream
+</h1>
+
+<!--<div class="alert">-->
+<!--<strong>Warning!</strong> By selecting public stream you have-->
+<!--</div>-->
+
+<div class="form-group">
+    <label for="stream-name">Stream name</label>
+    <input type="text" value="" name="stream-name" id="stream-name" class="form-control">
+</div>
+
+<div class="form-group">
+    <label for="stream-genre">Stream genre</label>
+    <div class="radio">
+        <div class="stream-genre"></div>
+    </div>
+</div>
+
+<h1 class="text-center text-uppercase">
+    Select type of stream
+</h1>
+
+<div class="form-group">
+
+    <div class="radio">
+        <input type="radio" name="stream-public" id="stream-public" value="1" checked>
+        <label for="stream-public"><span><span></span></span>Public stream</label>
+    </div>
+
+    <p class="p-danger">Respect copyright law!</p>
+
+    <div class="radio">
+        <input type="radio" name="stream-public" id="stream-private" value="0">
+        <label for="stream-private"><span><span></span></span>Private stream</label>
+    </div>
+
+
+</div>
+
+<div class="form-group" style="display: none">
+    <input type="text" name="stream-password" id="stream-password" class="form-control"
+           placeholder="Password">
+</div>
+<!--<label for="stream-password">Private stream password</label>-->
+
+
+
+
+<input type="hidden" value="none" name="stream-id">
+<input type="hidden" value="none" name="group-id">
+<input type="hidden" value="none" name="group-fav-id">
+<input type="hidden" value="true" name="create">

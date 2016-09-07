@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="application-name" content=""/>
+    <meta name="author" content="Michal Bystricky"/>
+    <meta name="description" content=""/>
+    <meta name="generator" content="Tornado"/>
+    <meta name="keywords" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ handler.settings["title"] }}</title>
+    <link rel="stylesheet" href="{{ static_url('js/styles/lib/bootstrap.min.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ static_url('js/styles/lib/bootstrap-glyphicons.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ static_url('js/styles/lib/bootstrap-notify.css') }}" type="text/css"/>
+
+    <script src="{{ static_url('js/lib/jquery-1.10.1.min.js') }}"></script>
+
+    {% block head %}{% end %}
+
+    <link rel="stylesheet" href="{{ static_url('js/styles/admin.css') }}" type="text/css"/>
+    <!--[if IE]>
+    <script src="{{ static_url('js/html5.js') }}"></script><![endif]-->
+</head>
+<body>
+<div class="bg-gradient-blue">
+    <div class="container-fluid max-width">
+        <div class="row-fluid">
+            <div class="col-12">
+
+                <div class="bs-example">
+                    <nav role="navigation" class="navbar navbar-default">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button data-target=".navbar-ex1-collapse" data-toggle="collapse" class="navbar-toggle"
+                                    type="button">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a href="/admin/" class="navbar-brand"><img src="/static/img/logo2.png" alt="" style="margin-top:10px"/></a>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse navbar-ex1-collapse">
+                            <!--<ul class="nav navbar-nav">-->
+                            <!--<li class="active"><a href="#">Link</a></li>-->
+                            <!--<li><a href="#">Link</a></li>-->
+                            <!--<li class="dropdown">-->
+                            <!--<a data-toggle="dropdown" class="dropdown-toggle" href="#">Dropdown <b class="caret"></b></a>-->
+                            <!--<ul role="menu" class="dropdown-menu">-->
+                            <!--<li><a href="#">Action</a></li>-->
+                            <!--<li><a href="#">Another action</a></li>-->
+                            <!--<li><a href="#">Something else here</a></li>-->
+                            <!--<li><a href="#">Separated link</a></li>-->
+                            <!--<li><a href="#">One more separated link</a></li>-->
+                            <!--</ul>-->
+                            <!--</li>-->
+                            <!--</ul>-->
+                            <!--<form role="search" class="navbar-form navbar-left">-->
+                            <!--<div class="form-group">-->
+                            <!--<input type="text" placeholder="Search" class="form-control">-->
+                            <!--</div>-->
+                            <!--<button class="btn btn-default" type="submit">Submit</button>-->
+                            <!--</form>-->
+                            <ul class="nav navbar-nav navbar-right">
+                                <!--<li><a class="uppercase" href="/admin/dashboard.html">Dashboard</a></li>-->
+                                {% if is_allowed("admin") %}
+                                <li><a class="uppercase" href="/">SoundSlash.com</a></li>
+                                <li><a class="uppercase" href="/admin/users.html">Users</a></li>
+                                {% end %}
+                                <li><a class="uppercase" href="/admin/streams.html">My streams</a></li>
+                                <!--<li><a class="uppercase disabled" href="/admin/premium.html">Premium</a></li>-->
+                                <!--<li><a class="uppercase disabled" href="/admin/notifications.html">Notifications <span class="badge">42</span></a></li>-->
+                                <!--<li><a class="uppercase disabled" href="/admin/account.html">Pay</a></li>-->
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown" class="dropdown-toggle center" href="#">
+
+                                        <span class="glyphicon glyphicon-user"></span><br>
+                                        {% if session["logged_as"] is not None %} {{logged_as}} on behalf to {% end %}
+                                        {% if user["name"] == "" %}
+                                        Noname
+                                        {% else %}
+                                        {{user["name"]}}
+                                        {% end %}
+
+                                    </a>
+                                    <ul role="menu" class="dropdown-menu">
+                                        <li><a href="/admin/profile.html">Profile</a></li>
+                                        <!--<li><a href="#">Another action</a></li>-->
+                                        <!--<li><a href="#">Something else here</a></li>-->
+                                        {% if session["logged_as"] is not None %}
+                                        <li><a href="/admin/user/me/log-as.html">Sign out</a></li>
+                                        {% else %}
+                                        <li><a href="/logout.html">Sign out</a></li>
+                                        {% end %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% block body %}{% end %}
+
+
+{% block bottom %}{% end %}
+<script src="{{ static_url('js/lib/bootstrap.min.js') }}"></script>
+<div class='notifications top-right'></div>
+<script src="{{ static_url('js/lib/bootstrap-notify.js') }}"></script>
+<script src="{{ static_url('js/lib/tmpl.min.js') }}"></script>
+<script src="{{ static_url('js/lib/loading.js') }}"></script>
+
+{% block tmpl %}{% end %}
+{% block js %}{% end %}
+</body>
+</html>

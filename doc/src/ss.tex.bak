@@ -1,0 +1,338 @@
+
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,pdftex]{geometry}	
+\usepackage[slovak]{babel}
+\usepackage{xcolor} 
+\usepackage{fix-cm} 
+
+
+\usepackage{graphicx}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{url}
+\usepackage{hyperref}
+
+\usepackage{listings}
+
+\usepackage{enumitem}
+
+\setlength{\oddsidemargin}{0mm} 
+\setlength{\evensidemargin}{0mm} 
+
+\newcommand{\HRule}[1]{\hfill \rule{0.2\linewidth}{#1}} 
+\newcommand{\lsti}{\lstinline}
+\definecolor{grey}{rgb}{0.9,0.9,0.9} 	
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{}
+\lhead{ \leftmark }
+\rfoot{Page \thepage}
+
+\usepackage{amsmath}
+\begin{document}
+
+\thispagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\colorbox{grey}{
+	\parbox[t]{1.0\linewidth}{
+		\centering \fontsize{50pt}{80pt}\selectfont
+		\vspace*{0.7cm} 
+		
+		\hfill Záťažové testy \\
+		\hfill Soundslash  \\
+		%\hfill \par
+		
+		\vspace*{0.7cm} 
+	}
+}
+
+%----------------------------------------------------------------------------------------
+
+\vfill 
+
+{\centering \large 
+\hfill \today \\
+\hfill Michal Bystrický \\
+\hfill \href{mailto:bystricky@soundslash.com}{bystricky@soundslash.com} \\
+
+\HRule{1pt}} 
+
+%----------------------------------------------------------------------------------------
+
+\clearpage 
+
+
+\tableofcontents
+
+
+\clearpage
+
+\section{Úvod}
+
+Tento dokument opisuje architektúru služby Soundslash a diskutuje jednotlivé úzke hrdlá (bottlenecks) architektúry. Ďalej sa venuje 
+
+\section{Aktuálny Stav Architektúry}
+
+Táto sekcia opisuje aktuálny stav architektúry. Sekcia \ref{hlp1} opisuje hlavný prípad použitia na úrovni summary (strategic) cieľov a konsekventne Sekcia \ref{hlp3} architektúru za ním. Sekcia \ref{hlp2} sa venuje typom služieb z pohľadu architektúry. Sekcia \ref{os} dodáva k hlavnému prípadu použitia ďalšie dôležité architektonické rozhodnutia.
+
+
+\subsection{Hlavný Prípad Použitia \label{hlp1}}
+
+Hlavný prípad použitia predstavuje vytvorenie internetového rádia a jeho manažment. Teda mohli by sme povedať, že na úrovní strategických cieľov sa tento prípad použitia bude volať ``Správa rádia''. Voľne ho môžeme opísať nasledovnými krokmi:
+
+\begin{enumerate}[noitemsep]
+\item Organizácia vyberie ``Vytvorenie rádia''
+\item Systém vytvorí rádio
+\item Systém spustí rádio
+\item System umožní organizácii rádio spravovať
+\item Systém umožní rádio počúvať
+\item Organizácia nahrá média
+\item Organizácia vytvára program
+\item Organizácia robí LIVE vstupy
+\item Poslucháč počúva rádio
+\end{enumerate}
+
+\subsection{Typy Služieb \label{hlp2}}
+
+Z pohľadu architektúry existujú 2 typy služieb:
+
+\begin{itemize}[noitemsep]
+\item re-enkódované,
+\item enkódované.
+\end{itemize}
+
+Ak ide o re-enkódovaný stream, média sa dekódujú, mixujú a enkódujú za behu. Takto napríklad môžeme primixovať LIVE stopu priamo z mikrofónu, alebo realizovať fade efekt na audio stopu. Pri enkódovaných nie je potreba tohto processingu, pretože už sú média spracované a posielajú sa priamo poslucháčom. Avšak, pri enkódovanom type nie je možné mixovať alebo inak upravovať stream.
+
+\subsection{Architektúra \label{hlp3}}
+
+Teraz si prejdeme architektúru za týmto prípadom použitia. Služba Soundslash je škálovateľná. Na Obrázku \ref{ss01} môžeme vidieť architektúru a rozloženie záťaže. Treba si uvedomiť, že každý komunikuje s každým na lokálnej sieti (nie nevyhnutne), okrem Web a Auth serverov. Ako identifikátor aplikácia vie svoju lokálnu IP a verejnú IP.
+
+DMZ nie je prístupná z Internetu, teda používatelia sa pripájajú na load balancer a Icecast streaming servery. Ďalej, load balancer rozloží záťaž na web servery, kde sa realizuje aj encoding audio súborov. Ak je encoding dokončený pridá sa tento audio súbor do databázy MongoDB. Média spolu s programom sa ukladajú do databázy.
+
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=0.30]{01.png}
+\caption{Architektúra služby Soundslash}
+\label{ss01}
+\end{figure}
+
+Asynchrónne z tejto databázy podľa programu, sú média vyberané, (dekódované, mixované, enkódované---v závislosti od typu služby) a posielané do Auth serverov. Na Auth serveroch beží streaming server Icecast, ktorý aktualizuje tabuľku streamov k serverom v databáze. Teda, ak už je poslucháčov mnoho Auth aktualizuje túto tabuľku. Následne pri pripojení ďalšieho poslucháča podľa tabuľky buď (1) pošle Web server požiadavku na Pipeline o pripojení ďalšieho Auth servera (2) alebo v prípade, že Auth server nie je plný, tak ho pripojí na tento server.  
+
+Teda, Pipeline realizuje samotné škálovanie (pripájanie) Auth serverov, pretože on realizuje samotný stream. Aby používateľ mohol ovládať stream, Pipeline má 2 interfejsi, ako môžeme vidieť na Obrázku \ref{ss02}. Prvý HTTP API prijíma správy, ktoré ovládajú stream, druhý Websockets slúži na posielanie LIVE dát z mikrofónu.
+
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=0.35]{02.png}
+\caption{Interfejsi služby Soundslash}
+\label{ss02}
+\end{figure}
+
+Na serveroch Auth beží Icecast streaming server, ktorý počúva a prijíma stream, ktorý ďalej distribuuje poslucháčom. Server Icecast cez HTTP API komunikuje s Auth serverom o streamoch, teda, aktualizuje mu nasledovné:
+
+\begin{itemize}[noitemsep]
+\item pridanie nového streamu,
+\item odpojenie streamu,
+\item pripojenie poslucháča,
+\item odpojenie poslucháča.
+\end{itemize}
+
+Auth server potom na základe týchto informácii aktualizuje tabuľku o dostuponosti Icecast streaming serverov, ktorej príklad môžeme vidieť v prílohe \ref{sec:tab}. Atribút level je od stupňa 0 do 10, kde 10 predstavuje úplne plný server a 0 práve vytvorený. Tento atribút je aktualizovaný pri Pipeline podľa CPU a pri Auth podľa poslucháčov.
+
+\subsection{Opis Serverov  \label{os}}
+
+\paragraph{Pipeline server.} Hlavná úloha je práca so streamom, teda dekódovanie, mixovanie, enkódovania a pripájanie nových Icecast streaming serverov. Tento server si sám aktualizuje tabuľku o vyťaženosti (atribút \texttt{level}). Ak je moc vyťažený ďalšie streamy nespúšťa. Web server potom hľadá iný menej-vyťažený, ak je nenájdený, používateľovi je oznámený problém o nedostatku serverov. 
+
+Metódy, ktoré je možné spúšťať na Pipeline HTTP API:
+
+\begin{verbatim}
+(r"/live.json", LiveHandler),
+(r"/updates.json", UpdatesHandler),
+(r"/start-streaming.json", StartStreamHandler),
+(r"/restart.json", RestartStreamHandler),
+(r"/scale.json", ScaleHandler),
+(r"/is-alive.json", IsAliveHandler),
+(r"/playlist-update.json", PlaylistUpdateHandler),
+(r"/run-command.json", RunCommandHandler)
+\end{verbatim}
+
+Posledná metóda umožňuje spúšťať príkazy z webového rozhrania a to sú nasledovné:
+
+\begin{itemize}[noitemsep]
+\item use, dump\_dot\_file, start, stop, next, scale, rescale, playlist
+\end{itemize}
+
+\paragraph{Auth server.} Jeho hlavná úloha je autentifikácia poslucháčov. Icecast streaming server sa pýta priamo tohto servera cez HTTP API, či poslucháčovi pustiť stream alebo nie. Aktualizuje tabuľku o Icecast streaming serveroch a ak Pipeline prestane posielať stream, opýta sa ho, či je dostupný, ak nie je, tak ho označí za nedostupný. 
+
+Metódy, ktoré je možné spúšťať na Auth HTTP API:
+
+\begin{verbatim}
+(r"/mount_add", MountAddHandler),
+(r"/mount_remove", MountRemoveHandler),
+(r"/listener_add", ListenerAddHandler),
+(r"/listener_remove", ListenerRemoveHandler),
+\end{verbatim}
+
+
+\paragraph{Web server.} Ak Pipeline nie je dostupný označí ho za nedostupný. Získava dáta o dosupnosti z tabuľky o dostupnosti z databázy (server MongoDB). Odosiela správu na spustenie nového streamu, alebo na spustenie nového Icecast streaming servera, ak je to potrebné. 
+
+
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=0.25]{03.png}
+\caption{Detail Web server}
+\label{ss03}
+\end{figure}
+
+Na Obrázku \ref{ss03} môžeme vidieť detail, ako Web server komunikuje s prehliadačom. Web server poskytuje iba datovú vrstvu nad databázou (JSON), teda celý obsah je generovaný na strane klienta. Ide o tučného klieta, kde URL routing, generovanie frontendu a logika aplikácie je presunutá ku klientovi. Server iba odpovedá na požiadavky, ktoré nevyhnutne potrebujú databázu alebo pripojenie k Pipeline. Websockets interfejs je požitý na aktualizáciu piesní pomocou vzoru Observer a tiež na odosielanie dát z mikrofónu. 
+
+\section{Testovacie Servery}
+
+Táto sekcia opisuje servery na ktorých budú robené testy a tiež diskutuje minimálne konfigurácie pre jednotlivé typy serverov. Sekcia \ref{fs} predstavuje fyzický server, na ktorom bude umiestnený virtuálny server (VPS) opísaný v Sekcii \ref{vps}.
+
+\subsection{Fyzický Server \label{fs}}
+
+Fyzický server má 2x CPU po 8 vláknach, čo je spolu 16 jadier. Na stroji je 16x VPS virtualizované na technológii KVM. Tabuľka \ref{fs02} prehľadne zobrazuje konfiguráciu fyzického servera. Na tomto fyzickom serveri je umiestnená 1x VPS opísaná Sekcii \ref{vps}.
+
+\begin{table}[htp]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+	CPU & 2x 2266.746 MHz\\
+\hline
+	Cores & 2x8=16\\
+\hline
+\end{tabular}
+\caption{Fyzický server}
+\label{fs01}
+\end{table}
+
+
+\subsection{VPS \label{vps}}
+
+Minimálna konfigurácia na celú zostavu sú minimálne 2 jadrá, nakoľko server Pipeline si aktualizuje svoje vyťaženie na základe CPU a teda v prípade processingu médii by sa mohol označiť ako plne využitý. Tabuľka \ref{fs02} prehľadne zobrazuje minimálnu konfiguráciu spustenia služby na 1 VPS.
+
+\begin{table}[htp]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+	Cores & 2\\
+\hline
+	RAM & 512 MB\\
+\hline
+	HDD & 40\\
+\hline
+\end{tabular}
+\caption{VPS}
+\label{fs02}
+\end{table}
+
+
+\section{Minimálne Konfigurácie \label{min}}
+
+Táto sekcia sa venuje minimálnym konfiguráciam. Sekcia \ref{oh} diskutuje o všeobecných ohraničeniach. Sekcie \ref{oh2}, \ref{oh3}, \ref{oh4} a \ref{oh5} následne opisujú minimálne konfigurácie pre jednotlivé servery.
+
+
+
+\subsection{Všeobecné Ohraničenia \label{oh}}
+
+\paragraph{HDD.} Operačný systém spolu so softvérom, aplikáciou a knižnicami je veľký do 5 GB, ako je vidno v prílohe \ref{sec:knf}. Teda minimálna veľkosť na diskový priestor je 5 GB.
+
+\paragraph{RAM.} 
+
+\paragraph{Traffic.}
+
+
+ 
+
+\subsection{Pipeline server \label{oh2}}
+
+
+\subsection{Auth server \label{oh3}}
+
+
+\subsection{Web server \label{oh4}}
+
+
+\subsection{MongoDB server \label{oh5}}
+
+
+
+
+
+
+\bibliographystyle{plain}
+\bibliography{common}
+
+\appendix
+
+\section{Tabul`ka serverov \label{sec:tab}}
+\begin{verbatim}
+{  
+   "_id":ObjectId("54ac34c5b928fe01884e64f6"),
+   "down":false,
+   "local_ip":"192.168.0.42",
+   "level":0,
+   "public_ip":"94.229.33.134",
+   "type":"pipeline",
+   "port":9999
+}{  
+   "_id":ObjectId("54ac34d5b928fe01884e64f7"),
+   "local_ip":"192.168.0.42",
+   "port":8000,
+   "streaming":{  
+      "mount":"/silvia.ogg",
+      "streaming":false,
+      "password":"n71dy238",
+      "listeners":0,
+      "max_listeners":8,
+      "stream":"54b00875ed317725b1ed9e31",
+      "quality":0
+   },
+   "type":"streaming",
+   "public_ip":"94.229.33.134",
+   "down":false,
+   "level":0,
+   "user_id":"54b00865ed317725b1ed9e2f"
+}
+\end{verbatim}
+
+\section{Konfigurácia VPS \label{sec:knf}}
+
+
+\begin{verbatim}
+ # df -h
+Filesystem                               Size  Used Avail Use% Mounted on
+/dev/mapper/soundslash--production-root  9.2G  2.4G  6.4G  27% /
+/dev/mapper/soundslash--production-home   29G  3.8G   24G  14% /www
+# grep MemTotal /proc/meminfo
+MemTotal:         508832 kB
+# grep "model name" /proc/cpuinfo
+model name	: Common KVM processor
+model name	: Common KVM processor
+# lscpu
+Architecture:          x86_64
+CPU(s):                2
+Vendor ID:             GenuineIntel
+CPU family:            15
+Model:                 6
+Stepping:              1
+CPU MHz:               2266.746
+BogoMIPS:              4533.49
+Hypervisor vendor:     KVM
+Virtualization type:   full
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              4096K
+
+\end{verbatim}
+
+\end{document}

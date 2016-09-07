@@ -1,0 +1,276 @@
+<div class="blocks">
+    <div class="block">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="player play">
+                        <div class="row">
+                            <div class="col-md-7 col-xs-7">
+                                <div class="pic">
+                                    <a data-stream="{%=o.stream._id%}" onclick="player.play_stop(this);return false"
+                                       style="position: relative;display: block">
+                                        <img src="{%if (o.stream.picture) {print('/image.jpg?id='+o.stream.picture+'&thumb=65x65')} else {print('/static/img/media_default.png')} %}" style="width: 65px; height: 65px" alt="" class="img-responsive"/>
+
+                                        <div class="icon" style="margin: -5px 0 0 -5px">
+                                            <div class="glyphicon glyphicon-play"></div>
+                                        </div>
+                                        <div class="icon" style="margin: -5px 0 0 -5px">
+                                            <div class="glyphicon glyphicon-stop"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="details">
+                                    Listeners: 96<br/>
+                                    Current listeners: 2
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-xs-5" style="height: 75px">
+                                <div style="display: table;height: 75px; width: 100%">
+                                    <div style="display: table-cell;vertical-align: middle;text-align: center">
+                                        <img src="/static/img/icons/time.png" alt="" style="margin-right: 20px"/>
+                                        <span class="clock"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div style="margin-bottom: 15px">
+            <div class="container-fluid lightdark-bg live-details">
+
+                <div class="row">
+                    <div class="col-md-7 col-xs-7">
+                        <p style="margin-bottom: 0">
+                            <span class="position"></span> / <span class="duration"></span><br/>
+                            <span class="artist"></span> - <span class="title"></span>
+                        </p>
+                    </div>
+                    <div class="col-md-5 col-xs-5">
+                        <div style="width: 150px;display: table;" class="pull-right">
+                            <div class="center-icon-50">
+                                <a onclick="updates.next();return false">
+                                    <img src="/static/img/icons/live_next.png" alt=""/>
+                                    Next song
+                                </a>
+                            </div>
+                            {% if (o.stream.reencoding) { %}
+                            <div class="center-icon-50">
+                                <a onclick="live.initLive()">
+                                    <img src="/static/img/icons/live_rec.png" alt=""/>
+                                    <span class="p-danger">LIVE</span>
+                                </a>
+                            </div>
+                            {% } %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container-fluid red-border live-holder" style="display: none" data-snap-ignore="true">
+                <div class="row">
+                    <div class="col-md-5 col-xs-5">
+                        <a id="record">
+                            <p class="p-danger">Tap and speak</p>
+                            <img src="/static/img/icons/live_rec_large2.png" alt=""/>
+                        </a>
+                    </div>
+                    <div class="col-md-7 col-xs-7">
+
+                        <div class="checkbox">
+                            <input type="checkbox" name="records" id="records">
+                            <label for="records"><span><span></span></span>Save to records</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="offline" id="offline">
+                            <label for="offline"><span><span></span></span>Offline recording</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" name="background" id="background">
+                            <label for="background">
+                                <span><span></span></span>
+                                Background
+                            </label>
+
+                            <table id="live-loop" class="background small draggable">
+                                <tbody class="live-loop-body sortable-live-loop">
+                                <tr><td>No background</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container-fluid lightblue-menu lightblue-bg">
+            <div class="icons">
+                <div class="icons-row"  role="tablist">
+                    <div class="icon-wrap" style="width: 50%"><a href="#next" class="active" role="tab" data-toggle="tab" onclick="browser.nextTracks(this)">Next tracks</a></div>
+                    <div class="icon-wrap"><div class="divider "></div></div>
+                    <div class="icon-wrap" style="width: 50%"><a href="#last" role="tab" data-toggle="tab" onclick="browser.lastPlayed(this)">Previous tracks</a></div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="next">
+
+                <div class="buffer" data-snap-ignore="true">
+                    <form id="buffer-form">
+                        <div class="table-responsive">
+                            <table class="table draggable"
+                                   id="buffer">
+                                <tbody class="buffer-body sortable-buffer">
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="tab-pane" id="last">
+
+
+                <div class="prev-tracks" data-snap-ignore="true">
+
+                    <form id="previous-form">
+                        <div class="table-responsive">
+                            <table class="table draggable"
+                                   id="previous">
+                                <tbody class="previous-body sortable-previous">
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="block">
+
+        <div class="container-fluid lightblue-menu lightblue-bg db-menu">
+            <div class="icons">
+                <div class="icons-row"  role="tablist">
+                    <div class="icon-wrap" style="width: 33%"><a href="#database" class="active" role="tab" data-toggle="tab" onclick="browser.database(this)">Media</a></div>
+                    <div class="icon-wrap"><div class="divider "></div></div>
+                    <div class="icon-wrap" style="width: 33%"><a href="#playlists" role="tab" data-toggle="tab" onclick="browser.databasePlaylists(this)">Playlists</a></div>
+                    <div class="icon-wrap"><div class="divider "></div></div>
+                    <div class="icon-wrap" style="width: 33%"><a href="#favorites" role="tab" data-toggle="tab" onclick="browser.databaseFavorites(this)">Quick choice</a></div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="tab-content dragging">
+            <div class="tab-pane active database-in-live" id="database" data-snap-ignore="true">
+
+
+                <form id="groupsearch-form">
+                    <div class="search-holder">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                            <input type="text" class="form-control" placeholder="Search in media" id="groupsearch" name="search">
+                            <input type="hidden" class="form-control" name="group_id" value="{%=o.group_id%}">
+                            <input type="hidden" class="form-control" name="order" value="artist">
+                            <input type="hidden" class="form-control" name="asc" value="1">
+                            <input type="hidden" class="form-control" name="page" value="1">
+
+                        </div>
+                    </div>
+                </form>
+
+
+                <div class="table-responsive">
+                    <table class="table sort-table">
+                    </table>
+                </div>
+                <div class="table-responsive">
+                    <table id="group" class="table draggable">
+
+                        <tbody class="group-body sortable-group">
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="tab-pane" id="playlists" data-snap-ignore="true">
+
+
+                <form id="playlistssearch-form">
+                    <div class="search-holder">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                            <input type="text" class="form-control" placeholder="Search in playlists" id="playlistssearch" name="search">
+
+                            <input type="hidden" name="group_id" value="null">
+                            <input type="hidden" name="page" value="1">
+                            <input type="hidden" name="groups" value="true">
+                        </div>
+                    </div>
+                </form>
+
+                <div class="table-responsive">
+                    <table id="playlists-table" class="table draggable">
+                        <tbody class="playlists-body sortable-playlist">
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+            </div>
+            <div class="tab-pane" id="favorites" data-snap-ignore="true">
+
+                <form id="favoritessearch-form">
+                    <div class="search-holder">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                            <input type="text" class="form-control" placeholder="Search in quick choice" id="favoritessearch" name="search">
+
+                            <input type="hidden" name="favorites" value="true">
+                            <input type="hidden" name="page" value="1">
+                            <input type="hidden" name="group_id" value="{%=o.stream.fav_group_id%}">
+                        </div>
+                    </div>
+                </form>
+
+
+                <div class="table-responsive">
+                    <table id="favorites-table" class="table draggable">
+                        <tbody class="favorites-body sortable-favorites">
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

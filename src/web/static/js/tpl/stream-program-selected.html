@@ -1,0 +1,82 @@
+
+<tr class="nodrag">
+    <td colspan="5" class="subtitle">
+        {% if (o.playlist) { %}
+        Selected playlist
+        {% } %}
+        {% if (o.show_repeats) { %}
+        Selected repeats
+        {% } %}
+    </td>
+</tr>
+
+{% if (o.playlist) { %}
+<tr id="{%=o.playlist.id%}" class="playlist-groups nodrag playlist-selected">
+    <td style="width: 18px" class="program-icon playlist">
+        <div></div>
+    </td>
+
+    <td class="playlist-no-action">
+        <p class="playlist">
+            {%=o.playlist.name%}
+        </p>
+    </td>
+    <td>
+        <p class="pull-right p-link" style="margin: 0;cursor: pointer" onclick="browser.playlist()">
+            Select another playlist
+        </p>
+    </td>
+</tr>
+{% } %}
+{% if (o.show_repeats) { %}
+
+
+{% if (o.repeats === undefined || o.repeats == 'init' || o.repeats.length == 0) { %}
+<tr class="nodrag">
+    <td>
+        No repeats
+    </td>
+</tr>
+{% } else { %}
+
+
+    {% for (var i=0, track; track=o.repeats[i]; i++) { %}
+
+<tr id="{%=track.id%}" class="track repeat-selected">
+
+    <td class="repeats nodrag">
+        <span data-duration="{%=track.duration%}" class="format-duration"></span>
+        <strong>{%=track.title%}</strong><br>
+        <input type="hidden" value="{%=track.id%}" name="id">
+        <input type="hidden" value="{%=track.weight%}" name="weight">
+        <input type="hidden" value="{%=track.artist%}" name="artist">
+        <input type="hidden" value="{%=track.title%}" name="title">
+        {%=track.artist%}
+    </td>
+    <td class="repeats nodrag" style="width: 140px">
+        <div class="pull-right" style="width: 140px">
+            <select name="" id="" class="form-control repeating">
+                <option value="0" {% if (track.repeating === undefined || track.repeating == 0) {print('selected="selected"');} %}>never</option>
+                <option value="1" {% if (track.repeating == 1) {print('selected="selected"');} %}>at the beginning</option>
+                <option value="2" {% if (track.repeating == 2) {print('selected="selected"');} %}>2 times</option>
+                <option value="3" {% if (track.repeating == 3) {print('selected="selected"');} %}>3 times</option>
+                <option value="4" {% if (track.repeating == 4) {print('selected="selected"');} %}>4 times</option>
+                <option value="5" {% if (track.repeating == 5) {print('selected="selected"');} %}>5 times</option>
+                <option value="6" {% if (track.repeating == 6) {print('selected="selected"');} %}>6 times</option>
+                <option value="7" {% if (track.repeating == 7) {print('selected="selected"');} %}>7 times</option>
+                <option value="8" {% if (track.repeating == 8) {print('selected="selected"');} %}>8 times</option>
+                <option value="9" {% if (track.repeating == 9) {print('selected="selected"');} %}>9 times</option>
+                <option value="10" {% if (track.repeating == 10) {print('selected="selected"');} %}>10 times</option>
+                <option value="11" {% if (track.repeating == 11) {print('selected="selected"');} %}>in the middle</option>
+                <option value="12" {% if (track.repeating == 12) {print('selected="selected"');} %}>at the end</option>
+            </select>
+        </div>
+    </td>
+
+
+</tr>
+    {% } %}
+
+{% } %}
+
+{% } %}

@@ -1,0 +1,36 @@
+
+<div class="container-fluid lightblue-menu highlight-menu" style="padding: 0">
+    <div class="icons">
+        <div class="icons-row"  role="tablist">
+            <div class="icon-wrap" style="width: 50%">
+                <!--<a href="#list-streams" role="tab" data-toggle="tab" onclick="UI.listStreams()" style="color: #fff"> -->
+                {%=o.stream.name%}
+                <input type="hidden" name="stream_id" id="stream" data-id="{%=o.stream._id%}"/>
+                <!--</a>-->
+            </div>
+            <div class="icon-wrap"><div class="divider "></div></div>
+            <div class="icon-wrap" style="width: auto"><a href="#stream-menu" role="tab" data-toggle="tab">STREAM MENU</a></div>
+        </div>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane" id="list-streams">
+        </div>
+        <div class="tab-pane" id="stream-menu">
+            <ul class="stream-menu menu">
+                <li class="item"><a data-menu-item="live" class="stream-menu-live" onclick="url('/stream.html', {action:'live'})">LIVE</a></li>
+                <li class="item"><a data-menu-item="database" class="stream-menu-database" onclick="url('/stream.html', {action:'media'})">Media</a></li>
+                <li class="item"><a data-menu-item="program" class="stream-menu-program"  onclick="url('/stream.html', {action:'program'})">Program</a></li>
+                <li class="item"><a data-menu-item="report" class="stream-menu-report"  onclick="url('/stream.html', {action:'report'})">Report</a></li>
+                <li class="item"><a data-menu-item="about" class="stream-menu-about"  onclick="url('/stream.html', {action:'about'})">About</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <h1 class="menu-title text-center text-uppercase">
+        LIVE
+    </h1>
+
+</div>
+
+<div id="radio-content"></div>

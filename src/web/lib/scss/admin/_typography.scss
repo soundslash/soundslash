@@ -1,0 +1,60 @@
+@import "libs/css-triangle";
+
+h1 {
+  font-size: 22px;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color:  #fff;
+  font-size: 12px;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+  color: #fff;
+
+}
+
+
+.left-menu .nav  > li > a {
+  color: #1b4d70;
+  border-bottom: 1px solid #dddddd;
+  border-top: 1px solid #ffffff;
+}
+
+
+
+.left-menu .nav  > li.active > a:after {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-bottom: 7px solid transparent;  /* left arrow slant */
+  border-top: 7px solid transparent; /* right arrow slant */
+  border-right: 7px solid #fff; /* bottom, add background color here */
+  font-size: 0;
+  line-height: 0;
+  position: absolute;
+  top:38%;
+  right:0px;
+}
+
+.left-menu .nav  > li.active > a,
+.left-menu .nav  > li > a:hover {
+  color: #1b4d70;
+  background-color: #f0f0f0;
+}
+
+nav a.disabled {
+
+  color: #888 !important;
+}
+
+.strong {
+  font-weight: bold;
+}
+
+.gold {
+  color: #FFD700;
+}

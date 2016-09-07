@@ -1,0 +1,23 @@
+
+<div role="complementary" class="bs-sidebar hidden-print left-menu">
+    <ul class="nav bs-sidenav">
+        <li class="stream-name uppercase">
+            {{stream['name']}}
+        </li>
+        <li> Reenc.: {{stream['reencoding']}}</li>
+        <li {% if submenu == "about" %}class="active"{% end %}>
+            <a href="/admin/stream/{{stream_id}}/about.html"><span class="icon glyphicon glyphicon-info-sign"></span> About</a>
+        </li>
+        <!--<li>-->
+            <!--<a href="#dropdowns"><span class="icon glyphicon glyphicon-calendar"></span> Program</a>-->
+        <!--</li>-->
+
+        {% if is_allowed("admin") %}
+        <li {% if submenu == "terminal" %}class="active"{% end %}>
+            <a href="/admin/stream/{{stream_id}}/terminal.html"><span class="icon glyphicon glyphicon-cog"></span> Terminal</a>
+        </li>
+        {% end %}
+
+
+    </ul>
+</div>

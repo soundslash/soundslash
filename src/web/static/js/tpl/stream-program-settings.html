@@ -1,0 +1,263 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group form-control" style="display: table">
+                <div style="display: table-cell;width: 130px">
+                    <div style="margin-left: 10px">PROGRAM NAME</div>
+                </div>
+                <div style="display: table-cell;">
+                    <input type="text" name="name" placeholder="Program name"/>
+                    {% if (o.program_id) { %}
+                    <input type="hidden" name="program_id" value="{%=o.program_id%}"/>
+                    {% } %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-xs-6">
+            <div class="form-group form-control" style="display: table">
+                <div style="display: table-cell;width: 90px">
+                    <div style="margin-left: 10px">START</div>
+                </div>
+                <div style="display: table-cell">
+                    <div class="input-append bootstrap-timepicker">
+                        <input id="timepicker1" type="text" class="input-small">
+                        <span class="add-on"><i class="icon-time"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-6">
+            <div class="form-group form-control" style="display: table">
+                <div style="display: table-cell;width: 90px">
+                    <div style="margin-left: 10px">END</div>
+                </div>
+                <div style="display: table-cell">
+                    <div class="input-append bootstrap-timepicker">
+                        <input id="timepicker2" type="text" class="input-small">
+                        <span class="add-on"><i class="icon-time"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+
+                <div class="checkbox checkbox-white" style="margin:0">
+                    <input type="checkbox" name="exact" id="exact">
+                    <label for="exact"><span><span></span></span>Exact start</label>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="checkbox checkbox-white" style="margin:0">
+                    <input type="checkbox" name="shuffle" id="shuffle">
+                    <label for="shuffle"><span><span></span></span>Shuffle</label>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-xs-6">
+
+            <div class="form-group">
+                <div id="picture-wrap"></div>
+                <div id="picture-show"></div>
+            </div>
+
+        </div>
+        <div class="col-md-6 col-xs-6">
+
+            <div class="form-group form-control" style="display: table">
+                <div style="display: table-cell;width: 90px">
+                    <div style="margin-left: 10px">COLOR</div>
+                </div>
+                <div style="display: table-cell;">
+                    <div style="display: block;position: relative">
+                        <div class="input-append color-input">
+                            <div class="current"></div>
+                            <span class="add-on"><i class="glyphicon glyphicon-tint"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid lightblue-menu lightblue-bg db-menu">
+    <div class="icons">
+        <div class="icons-row"  role="tablist">
+            <div class="icon-wrap" style="width: 49%"><a href="#playlists" class="active" role="tab" data-toggle="tab" onclick="browser.databasePlaylists(this)">Playlists</a></div>
+            <div class="icon-wrap"><div class="divider "></div></div>
+            <div class="icon-wrap" style="width: 49%"><a href="#database" role="tab" data-toggle="tab" onclick="browser.databaseRepeats(this)">Repeats</a></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tab-content">
+    <div class="tab-pane active program-playlists" id="playlists">
+
+
+        <form id="playlistssearch-form">
+            <div class="search-holder">
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                    <input type="text" class="form-control" placeholder="Search in playlists" id="playlistssearch" name="search">
+
+                    <input type="hidden" name="group_id" value="null">
+                    <input type="hidden" name="page" value="1">
+                    <input type="hidden" name="groups" value="true">
+                </div>
+            </div>
+        </form>
+
+
+        <div class="table-responsive">
+            <table id="playlists-table" class="table draggable">
+                <tbody class="playlists-body sortable-playlist">
+
+
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+    <div class="tab-pane program-repeats" id="database" data-snap-ignore="true">
+
+
+        <div class="container-fluid lightblue-menu navigation" style="margin: 0 0 10px 0">
+            <div class="icons">
+                <div class="icons-row">
+                    <div class="icon-wrap" style="width: 100%"><a onclick="browser.selectedRepeats(this)" class="active" style="padding: 8px 15px">
+                        <img src="/static/img/icons/tab-eye-blue.png" alt="" style="vertical-align: middle;display: inline-block;margin-right: 8px"/><span style="vertical-align: middle;display: inline-block;color:#fff">YOUR SELECTED REPEATS</span>
+                    </a></div>
+                </div>
+            </div>
+        </div>
+
+        <form id="groupsearch-form">
+            <div class="search-holder">
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                    <input type="text" class="form-control" placeholder="Search in media" id="groupsearch" name="search">
+                    <input type="hidden" class="form-control" name="group_id" value="{%=o.group_id%}">
+                    <input type="hidden" class="form-control" name="page" value="1">
+                    <input type="hidden" class="form-control" name="order" value="artist">
+                    <input type="hidden" class="form-control" name="asc" value="1">
+                </div>
+            </div>
+        </form>
+
+        <p class="text-center">
+            How many times play in the program?
+        </p>
+
+
+
+
+
+        <div class="table-responsive">
+            <table class="table sort-table">
+            </table>
+        </div>
+        <div class="table-responsive">
+            <table id="group" class="table draggable">
+
+                <tbody class="group-body sortable-group">
+
+
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive">
+            <table id="selected-repeats" class="table draggable">
+
+                <tbody class="selected-repeats-body sortable-group">
+
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-secondary" onclick="program.submitProgram('{%=o.day%}')">Save</a>
+        </div>
+    </div>
+</div>
+
+
+{% if (o.program_id) { %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="edit-playlists swiping" data-snap-ignore="true">
+                <form>
+                    <div class="table-responsive">
+                        <table class="table draggable" style="margin: 0">
+                            <tbody>
+
+
+                                <tr class="nodrag">
+                                    <td style="border:0;background-color: #fff;">
+                                        or <a href="#" onclick='browser.swipe("left", $(this).closest("tr"))' class="p-danger">
+                                            delete program
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr class="hide swipe-left nodrag">
+                                    <td style="padding-top: 4px; padding-bottom: 3px;border:0;background-color: #fff;">
+                                        <div style="width: 100%;display: table;margin: 0 auto">
+                                            <div class="center-icon" style="text-align: left">
+                                                <p style="margin-bottom:0"><span class="p-danger" style="display: inline-block">Delete program!</span> Are you sure?</p>
+                                            </div>
+                                            <div class="center-icon" style="width: 130px">
+                                                <div style="width: 130px;display: table;margin: 0 auto">
+                                                    <div class="center-icon" >
+                                                        <a onclick="program.removeProgram('{%=o.program_id%}')" class="p-danger">YES</a>
+                                                    </div>
+                                                    <div class="center-icon" style="width: 10px">
+                                                        <div class="divider"></div>
+                                                    </div>
+                                                    <div class="center-icon" style="width: 95px" >
+                                                        <a onclick="browser.unswipe(this)">No, go back</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hide swipe-right nodrag">
+                                    <td colspan='3' style="padding-top: 4px; padding-bottom: 3px">
+
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% } %}
