@@ -1,4 +1,4 @@
-Enjoy code for project SoundSlash - scalable audio streaming service - built in Python and GStreamer with Icecast streaming server. This is old code for SoundSlash.
+Enjoy the code for project SoundSlash - scalable audio streaming service - built in Python and GStreamer with Icecast streaming server. This is old code for SoundSlash.
 
 Docs are located in (Slovak)
 
